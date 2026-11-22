@@ -1,0 +1,37 @@
+{
+  "_说明": "配置模板（可安全上传）。使用时复制为 .local/config.json 并填入自己的值；.local/ 已被 .gitignore 排除。所有相对路径以本文件所在目录为基准。",
+  "glm": {
+    "api_key": "",
+    "api": "https://open.bigmodel.cn/api/paas/v4/chat/completions",
+    "model": "glm-4-flash"
+  },
+  "_模型服务": "软件会在首次保存时把 glm 段迁移为 providers 列表的第一项。providers 支持任意 OpenAI 兼容接口：云端(智谱/DeepSeek/Kimi/OpenAI)或本地(Ollama http://127.0.0.1:11434/v1/chat/completions、LM Studio http://127.0.0.1:1234/v1/chat/completions，key 留空)。active_provider 指向当前使用的下标。",
+  "paths": {
+    "data_root": "",
+    "qq_archive": "",
+    "wechat_archive": "",
+    "qq_summary_out": "",
+    "wechat_summary_out": "",
+    "qq_key_file": "",
+    "qq_lib": "",
+    "qq_log": "",
+    "wechat_log": "",
+    "qq_incr": "",
+    "wechat_incr": "",
+    "wechat_db_dir": "",
+    "index_db": "",
+    "trash": ""
+  },
+  "account": {
+    "qq": ""
+  },
+  "sync": {
+    "enabled": true,
+    "mode": "interval",
+    "interval_minutes": 60,
+    "daily_time": "00:30",
+    "targets": ["qq", "wechat"],
+    "on_startup": true,
+    "rebuild_index": true
+  }
+}

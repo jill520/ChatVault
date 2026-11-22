@@ -1,0 +1,86 @@
+# ============================================================
+# 绝不可上传：本地私有配置、密钥、个人数据
+# ============================================================
+.local/
+config.local.json
+*.key
+*_key.txt
+qq_pc_key.txt
+wx_pc_key.txt
+all_keys.json
+*.pem
+
+# 同步状态与派生索引（含真实消息 ID / 昵称 / QQ 号）
+*_sync_state.json
+uid_map.json
+group_map.json
+c2c_peers.json
+group_members.json
+excluded.json
+favorites.json
+group_alias.json
+user_alias.json
+!group_alias.example.json
+!user_alias.example.json
+
+# 聊天归档、增量、总结、备份
+archive/
+增量/
+总结/
+聊天文件备份/
+*.log
+
+# 解密工具与运行缓存（不随公开发布版分发）
+tools/
+.cache/
+ChatVault-App/
+build/
+dist/
+__pycache__/
+*.py[cod]
+
+# 大文件与安装包
+*.exe
+*.msi
+*.zip
+*.7z
+*.xz
+*.tar
+*.gz
+*.db
+*.db-wal
+*.db-shm
+*.dump
+qq_reg_dump.txt
+pc_wx_cands.bin
+frida-server*
+fs16*
+DockerDesktopInstaller.exe
+SarasaTermSC.7z
+
+# ============================================================
+# 原工作区一次性排查脚本（不属于发布程序）
+# ============================================================
+analyze_*.py
+catch_*.py
+classify_*.py
+decrypt_*.py
+diag*.py
+explore_*.py
+extract_*.py
+hook_*.py
+probe_*.py
+scan_*.py
+export_*.py
+upload_*.py
+qq_*.py
+memscan_*.py
+race_attach_wx.py
+test_sanitize.py
+zhipu_proxy.py
+platform-tools/
+sqlite/
+fonts/
+pull/
+wx_snapshot/
+dec_v2/

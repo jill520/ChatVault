@@ -1,0 +1,3053 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>聊天档案工作台</title>
+<script>
+(function(){try{var u=JSON.parse(localStorage.getItem('cv.ui')||'{}');
+var t=u.theme||'auto';
+var d=t==='auto'?((window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches)?'dark':'light'):t;
+document.documentElement.dataset.theme=d;
+document.documentElement.dataset.font=u.font||'m';
+document.documentElement.dataset.density=u.density||'m';}catch(e){}})();
+</script>
+<link rel="stylesheet" href="/web/app.css">
+</head>
+<body>
+
+<aside id="side">
+  <div class="logo">
+    <div class="mark">
+      <svg viewBox="0 0 24 24" fill="none"><path d="M4 5.5C4 4.7 4.7 4 5.5 4h13c.8 0 1.5.7 1.5 1.5v9c0 .8-.7 1.5-1.5 1.5H10l-4.2 3.6c-.5.4-1.3 0-1.3-.7V5.5z" fill="#fff"/></svg>
+    </div>
+    <div>
+      <h1>聊天档案工作台</h1>
+      <div class="sub">本地运行 · 隐私优先</div>
+    </div>
+  </div>
+  <nav>
+    <button class="navbtn on" data-p="search">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+      搜索<span class="dot"></span>
+    </button>
+    <button class="navbtn" data-p="time">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M8 3v4M16 3v4M3 10h18"/><path d="M8 14h2M14 14h2M8 17h2M14 17h2"/></svg>
+      时间表<span class="dot"></span>
+    </button>
+    <button class="navbtn" data-p="convs">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16M4 12h16M4 19h10"/><circle cx="19" cy="19" r="2" fill="currentColor" stroke="none"/></svg>
+      会话<span class="dot"></span>
+    </button>
+    <button class="navbtn" data-p="chat">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.5 8.5 0 0 1-8.5 8.5c-1.5 0-2.9-.4-4.1-1L3 20l1.1-5.2A8.5 8.5 0 1 1 21 11.5z"/></svg>
+      对话<span class="dot"></span>
+    </button>
+    <button class="navbtn" data-p="contacts">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.5"/><path d="M3.5 19c.6-3.2 2.8-5 5.5-5s4.9 1.8 5.5 5"/><circle cx="17" cy="9" r="2.5"/><path d="M16 13.6c2.3.2 4 1.7 4.5 4.4"/></svg>
+      联系人<span class="dot"></span>
+    </button>
+    <button class="navbtn" data-p="fav">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l2.9 5.9 6.5.9-4.7 4.6 1.1 6.5L12 17.8 6.2 20.9l1.1-6.5L2.6 9.8l6.5-.9z"/></svg>
+      收藏<span class="dot"></span>
+    </button>
+    <button class="navbtn" data-p="stats">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>
+      统计<span class="dot"></span>
+    </button>
+    <button class="navbtn" data-p="import">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="M7 10l5 5 5-5"/><path d="M4 21h16"/></svg>
+      导入<span class="dot"></span>
+    </button>
+    <button class="navbtn" data-p="sync">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 0 1-15.5 6.3L3 16"/><path d="M3 12A9 9 0 0 1 18.5 5.7L21 8"/><path d="M3 21v-5h5"/><path d="M21 3v5h-5"/></svg>
+      同步<span class="dot"></span>
+    </button>
+    <button class="navbtn" data-p="keys">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="15" r="4"/><path d="M10.8 12.2 20 3M15.5 7.5 18 10M12.5 10.5 14.5 12.5"/></svg>
+      密钥与索引<span class="dot"></span>
+    </button>
+    <button class="navbtn" data-p="settings">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.9l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.9-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1-1.6 1.7 1.7 0 0 0-1.9.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.9 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.6-1 1.7 1.7 0 0 0-.3-1.9l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.9.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.9-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.9v.1a1.7 1.7 0 0 0 1.5 1h.1a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg>
+      设置<span class="dot"></span>
+    </button>
+  </nav>
+  <div class="side-foot">
+    <div class="tag">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#10a56b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="11" width="16" height="9" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>
+      <span class="green">仅监听 127.0.0.1</span>
+    </div>
+    <div class="tag" style="margin-top:4px">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#8a9099" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
+      <span>搜索全本地 · 对话先脱敏</span>
+    </div>
+  </div>
+</aside>
+
+<div id="main">
+  <div class="topbar">
+    <div class="navbtns">
+      <button id="nav-back" class="navicon navbig" title="后退 (Alt+←)" aria-label="后退" disabled>
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M11 4 3 12l8 8v-5h10V9H11V4z"/></svg>
+      </button>
+      <button id="nav-fwd" class="navicon navbig" title="前进 (Alt+→)" aria-label="前进" disabled>
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13 4l8 8-8 8v-5H3V9h10V4z"/></svg>
+      </button>
+    </div>
+    <h2 id="tb-title">搜索</h2>
+    <span class="desc" id="tb-desc">在本地归档中查找聊天记录</span>
+    <span class="privacy">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+      全程本地索引检索 · 送模型前强制脱敏（手机号/卡号/身份证/邮箱/密码）
+    </span>
+  </div>
+
+  <div class="content"><div class="wrap">
+
+  <section class="page on" id="p-search">
+    <div class="sq">
+      <div class="sq-row">
+        <select id="s-platform" class="sq-plat"><option>QQ</option><option>微信</option></select>
+        <div class="sq-input">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+          <input type="text" id="s-q" placeholder="搜索聊天内容，回车检索">
+          <button class="sq-x" id="s-clear" style="display:none" title="清空">×</button>
+        </div>
+        <button id="s-btn">搜索</button>
+        <button class="ghost" id="s-toggle" title="会话 / 日期 / 发送者 筛选">筛选</button>
+        <button class="ghost" id="s-group-btn" onclick="toggleGroup()" title="按会话分组显示">分组</button>
+      </div>
+      <div class="sq-row sq-adv" id="s-adv" style="display:none">
+        <label>会话
+          <select id="s-conv"><option value="">全部会话</option></select>
+        </label>
+        <label>从<input type="date" id="s-from"></label>
+        <label>到<input type="date" id="s-to"></label>
+        <label>发送者<input type="text" id="s-sender" list="s-sender-list" placeholder="昵称片段 / QQ号"><datalist id="s-sender-list"></datalist></label>
+        <label class="sq-chk"><input type="checkbox" id="s-all" style="width:auto"> 含系统/媒体</label>
+        <label class="sq-chk"><input type="checkbox" id="s-regex" style="width:auto"> 正则</label>
+      </div>
+    </div>
+    <div class="sq-body">
+      <div class="sq-list" id="s-list">
+        <div class="sq-empty" id="s-idle">
+          <b>输入关键词开始检索</b><br>
+          全库 <span id="s-scope">—</span> · 结果按时间倒序，点任意一条在右侧看完整对话
+          <div id="s-hist" style="margin-top:16px"></div>
+        </div>
+      </div>
+      <div class="splitter" data-split="search" title="拖动调整左右宽度，双击恢复默认"></div>
+<div class="rd" id="rd">
+          <div class="rd-empty" id="rd-empty">← 点左侧任意一条结果<br>这里显示那场对话的完整上下文</div>
+        </div>
+      </div>
+
+  </section>
+
+  <section class="page" id="p-time">
+    <div class="tm">
+      <div class="tm-side" id="tm-side">
+        <div class="tm-top">
+          <button class="tm-arrow" id="tm-prev" title="上个月" aria-label="上个月">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M11 4 3 12l8 8v-5h10V9H11V4z"/></svg>
+          </button>
+          <div class="tm-ym" id="tm-ym">—</div>
+          <button class="tm-arrow" id="tm-next" title="下个月" aria-label="下个月">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13 4l8 8-8 8v-5H3V9h10V4z"/></svg>
+          </button>
+        </div>
+        <div class="tm-tools">
+          <select id="tm-platform" class="tm-plat"><option>QQ</option><option>微信</option></select>
+          <input type="month" id="tm-month" title="直接跳到某年某月">
+          <button class="ghost" id="tm-latest" title="跳到最近有记录的月份">最新</button>
+          <span class="info" tabindex="0" data-tip="每格下面的数字，是那天聊了多少条。&#10;点有数字的日期，右边列出那天聊过的人和群，再点进去看完整对话。&#10;微信有些记录只知道月份、不知道具体哪天，统一放在最下面。">?</span>
+        </div>
+        <div class="tm-week"><span>一</span><span>二</span><span>三</span><span>四</span><span>五</span><span>六</span><span>日</span></div>
+        <div class="tm-grid" id="tm-grid"></div>
+        <div class="tm-foot" id="tm-foot"></div>
+      </div>
+      <div class="splitter" data-split="time" title="拖动调整左右宽度，双击恢复默认"></div>
+      <div class="tm-main" id="tm-main">
+        <div class="rd-empty">← 点日历上有数字的那天<br>这里列出那天聊过的人和群</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="page" id="p-convs">
+    <div class="sq">
+      <div class="sq-row">
+        <select id="v-platform" class="sq-plat"><option>QQ</option><option>微信</option></select>
+        <div class="sq-input">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+          <input type="text" id="v-q" placeholder="按会话名 / 备注 / QQ号 / 群号过滤">
+          <button class="sq-x" id="v-clear" style="display:none" title="清空">×</button>
+        </div>
+        <span class="muted" id="v-count" style="flex:0 0 auto"></span>
+      </div>
+      <div class="sq-row">
+        <label class="sq-chk" style="flex-direction:row;align-items:center;gap:6px;font-size:12px;color:var(--t1)">
+          <input type="checkbox" id="v-onlyarch" style="width:auto" checked> 只看有归档的会话
+        </label>
+        <label class="sq-chk" style="flex-direction:row;align-items:center;gap:6px;font-size:12px;color:var(--t1)">
+          排序
+          <select id="v-sort" style="height:28px;width:auto;padding:2px 6px;font-size:12px">
+            <option value="recent">最近活跃</option>
+            <option value="count">消息最多</option>
+            <option value="name">名称</option>
+          </select>
+        </label>
+      </div>
+    </div>
+    <div class="sq-body">
+      <div class="sq-list" id="v-list">
+        <div class="sq-empty">载入会话列表…</div>
+      </div>
+      <div class="splitter" data-split="convs" title="拖动调整左右宽度，双击恢复默认"></div>
+      <div class="rd" id="v-rd">
+        <div class="rd-empty">← 选择左侧任意一场会话<br>直接阅读完整聊天记录（可导出、复制）</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="page" id="p-chat">
+    <div class="card" style="display:flex;flex-direction:column">
+      <div class="row">
+        <div style="flex:0 0 110px"><label>上下文来源</label><select id="c-platform"><option>QQ</option><option>微信</option></select></div>
+        <div style="flex:0 0 180px"><label>模型服务</label><select id="c-prov"></select></div>
+        <div style="flex:3"><label>检索词(留空=用你的问题自动检索)</label><input type="text" id="c-ctxq" placeholder="例如:杜可欣；不填则自动检索"></div>
+        <div style="flex:0"><label>&nbsp;</label>
+          <label style="display:inline-flex;align-items:center;gap:5px;margin:0;padding:8px 0"><input type="checkbox" id="c-usectx" style="width:auto" checked> 附带归档上下文</label>
+        </div>
+      </div>
+      <div class="chatmeta" id="c-meta"></div>
+      <div class="chatbox" id="c-box">
+        <div class="chat-welcome">
+          <div class="cw-ico">💬</div>
+          <div class="cw-t">开始一段对话</div>
+          <div class="cw-s">所有内容都会在本地脱敏后才发送给模型</div>
+          <div class="cw-ex">
+            <button class="ghost" onclick="quickAsk('最近一周大家在群里聊了什么？')">最近一周聊了什么</button>
+            <button class="ghost" onclick="quickAsk('帮我总结今天的重要消息')">总结今天的重要消息</button>
+            <button class="ghost" onclick="quickAsk('我和哪些人最近聊得最多？')">最近聊得最多的人</button>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div style="flex:5"><input type="text" id="c-input" placeholder="输入消息，回车发送..." onkeydown="if(event.key==='Enter')sendChat()"></div>
+        <div style="flex:0"><button id="c-btn" onclick="sendChat()">发送</button></div>
+        <div style="flex:0"><button class="ghost" onclick="clearChat()">清空</button></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="page" id="p-contacts">
+    <div class="card" style="padding:0;overflow:hidden;display:flex;height:calc(100vh - 158px);min-height:420px">
+      <div id="ct-side" class="ct-side">
+        <div style="padding:12px 12px 10px;border-bottom:1px solid var(--line-2)">
+          <input type="text" id="ct-q" placeholder="搜索 昵称 / 备注 / QQ号" oninput="renderContacts()">
+          <div style="display:flex;gap:6px;margin-top:8px">
+            <button class="ghost ct-tab on" data-t="person" onclick="ctSwitch('person')">联系人</button>
+            <button class="ghost ct-tab" data-t="group" onclick="ctSwitch('group')">群聊</button>
+            <button class="ghost ct-tab" data-t="dir" onclick="ctSwitch('dir')" title="只在有归档记录的联系人里找">有记录</button>
+          </div>
+        </div>
+        <div id="ct-list" style="flex:1;overflow-y:auto"></div>
+        <div class="muted" id="ct-count" style="padding:8px 12px;border-top:1px solid var(--line-2)"></div>
+      </div>
+      <div class="splitter" data-split="contacts" title="拖动调整左右宽度，双击恢复默认"></div>
+      <div style="flex:1;overflow-y:auto;padding:22px 24px" id="ct-detail">
+        <p class="muted">从左侧选择一位联系人或群，右侧可直接「打开完整对话」按时间气泡阅读。</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="page" id="p-fav">
+    <div class="card">
+      <h3>收藏</h3>
+      <p class="hint">在任意消息上右键「收藏这条」；只存本机 <code>.local/favorites.json</code>，不上传。</p>
+      <input type="text" id="fav-q" placeholder="搜索收藏内容 / 会话名" oninput="renderFavs()">
+      <div id="fav-list" style="margin-top:12px"></div>
+      <div class="muted" id="fav-count" style="margin-top:8px"></div>
+    </div>
+  </section>
+
+  <section class="page" id="p-stats">
+    <div class="card">
+      <h3>统计</h3>
+      <p class="hint">基于本地检索索引聚合，只读；不含任何网络请求。</p>
+      <div class="row" style="align-items:end">
+        <div style="flex:0 0 160px"><label>平台</label>
+          <select id="st-platform" onchange="loadStats()"><option>QQ</option><option>微信</option></select>
+        </div>
+      </div>
+      <div id="st-kpi" class="stat-kpis" style="margin-top:14px"></div>
+      <div id="st-body" style="margin-top:18px"></div>
+    </div>
+  </section>
+
+  <section class="page" id="p-import">
+    <div class="card">
+      <h3>从手机导入聊天记录 <span class="info" tabindex="0" data-tip="手机先把记录传到电脑，软件再从电脑读取。&#10;不要直接把手机导出的 txt/html 丢进归档，软件读不了。">?</span></h3>
+      <p class="hint">先让手机把聊天记录传到电脑，软件再从电脑读取。别直接拿手机导出的 txt/html 丢进来。</p>
+      <div class="import-steps">
+        <div class="import-step"><b>1 手机导出</b><span>QQ：设置里找「聊天记录备份与迁移 → 备份到电脑」<br>微信：「我 → 设置 → 通用 → 聊天记录迁移与备份 → 迁移到电脑」</span></div>
+        <div class="import-step"><b>2 传到电脑</b><span>手机和电脑连同一个 Wi-Fi，按手机提示在电脑 QQ / 微信里确认接收。</span></div>
+        <div class="import-step"><b>3 软件读取</b><span>到「同步」页填电脑端的数据位置，配好密钥再同步；已经整理好的 md 用本页导入。</span></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>QQ 手机记录 <span class="info" tabindex="0" data-tip="QQ 手机备份到电脑后，电脑 QQ 的原始数据库就是软件要读的数据。&#10;QQ 密钥不能一键抓取，需要手动填。">?</span></h3>
+      <p class="hint">手机 QQ 备份到电脑后，电脑 QQ 会保存原始聊天数据。到「同步」页填 QQ 原始数据位置；QQ 密钥需要手动填写（不能一键抓取）。</p>
+      <p class="muted" style="margin:0">备份时保持手机和电脑在同一 Wi-Fi，按手机提示在电脑 QQ 确认；备份完成后不要删除电脑 QQ 的数据。</p>
+    </div>
+
+    <div class="card">
+      <h3>微信手机记录 <span class="info" tabindex="0" data-tip="微信迁移到电脑后，电脑微信的 db_storage 文件夹就是软件要读的数据。&#10;微信密钥可以一键抓取。">?</span></h3>
+      <p class="hint">手机微信迁移到电脑后，电脑微信会保存聊天数据。到「同步」页填微信数据文件夹，点「一键抓取微信密钥」，再同步。</p>
+      <p class="muted" style="margin:0">迁移时保持手机和电脑在同一 Wi-Fi，按手机提示在电脑微信确认；完成后不要删除电脑微信的数据。</p>
+    </div>
+
+    <div class="card">
+      <h3>已经导出成文件？ <span class="info" tabindex="0" data-tip="软件直接读的是整理好的 md 归档：文件夹里有「私聊」「群聊」，每个会话一个文件夹，每月一个 .md。&#10;手机自带的 txt/html 导出不能直接读。">?</span></h3>
+      <p class="hint">软件能直接读的是整理好的 md 归档，文件夹里要有「私聊」「群聊」。手机自带的 txt/html 导出不行，需要先整理成 md。</p>
+      <label>文件夹完整路径</label>
+      <div style="display:flex;gap:8px">
+        <input type="text" id="imp-path" placeholder="例如 D:\聊天记录\QQ">
+        <button style="flex:0" onclick="importScan()">检查这个文件夹</button>
+      </div>
+      <div id="imp-result" style="margin-top:12px"></div>
+      <div id="imp-copy" style="margin-top:12px;display:none">
+        <div class="row" style="align-items:end">
+          <div style="flex:0 0 160px"><label>这是哪个平台</label>
+            <select id="imp-platform"><option>QQ</option><option>微信</option></select>
+          </div>
+          <div style="flex:0"><button onclick="importCopy()">复制到软件归档</button></div>
+        </div>
+        <p class="muted" style="margin:8px 0 0">只复制 md 文件；已有同名文件会跳过，不会覆盖。</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="page" id="p-sync">
+    <div class="card">
+      <h3>同步状态</h3>
+      <div id="sy-status" class="statusline muted">读取中…</div>
+      <div id="sy-next" class="muted" style="margin-top:8px"></div>
+      <div id="sy-job" style="margin-top:10px"></div>
+      <div id="sy-fail" style="margin-top:10px"></div>
+      <div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap">
+        <button class="ghost" onclick="showSyncLog('qq')">查看 QQ 日志</button>
+        <button class="ghost" onclick="showSyncLog('wechat')">查看微信日志</button>
+      </div>
+      <div id="sy-log" style="margin-top:10px"></div>
+    </div>
+
+    <div class="card">
+      <h3>手动同步</h3>
+      <p class="hint">试运行只看看有没有新消息，不会写入。</p>
+      <div class="row">
+        <div style="flex:0"><button class="syncbtn" data-sync-target="qq" onclick="startSync('qq',false)">同步 QQ</button></div>
+        <div style="flex:0"><button class="ghost syncbtn" onclick="startSync('qq',true)">QQ 试运行</button></div>
+        <div style="flex:0"><button class="syncbtn" data-sync-target="wechat" onclick="startSync('wechat',false)">同步 微信</button></div>
+        <div style="flex:0"><button class="ghost syncbtn" onclick="startSync('wechat',true)">微信试运行</button></div>
+      </div>
+      <div id="sy-out" style="margin-top:12px"></div>
+    </div>
+
+    <div class="card">
+      <h3>自动同步</h3>
+      <p class="hint">只在软件运行期间生效：到点自动同步，关闭软件即停止，不会后台驻留。</p>
+      <label style="display:flex;align-items:center;gap:8px;margin-bottom:14px">
+        <input type="checkbox" id="sy-enabled" style="width:auto"> 启用自动同步
+      </label>
+      <div class="row">
+        <div><label>频率</label>
+          <select id="sy-mode" onchange="syModeChanged()">
+            <option value="interval">每隔一段时间</option>
+            <option value="daily">每天固定时间</option>
+          </select>
+        </div>
+        <div><label>间隔（分钟，5~1440）</label><input type="number" id="sy-interval" min="5" max="1440" step="5"></div>
+        <div><label>每天时间</label><input type="time" id="sy-time"></div>
+      </div>
+      <label>同步内容</label>
+      <div style="display:flex;gap:20px;margin-bottom:12px">
+        <label style="display:flex;align-items:center;gap:6px"><input type="checkbox" id="sy-qq" style="width:auto"> QQ</label>
+        <label style="display:flex;align-items:center;gap:6px"><input type="checkbox" id="sy-wx" style="width:auto"> 微信</label>
+      </div>
+      <label style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
+        <input type="checkbox" id="sy-startup" style="width:auto"> 软件启动后自动同步一次
+      </label>
+      <label style="display:flex;align-items:center;gap:8px">
+        <input type="checkbox" id="sy-reindex" style="width:auto"> 同步后自动增量更新搜索索引
+      </label>
+      <div style="margin-top:16px;display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+        <button onclick="saveSyncCfg()">保存自动同步设置</button>
+        <span class="muted" id="sy-cfg-msg"></span>
+      </div>
+    </div>
+  </section>
+
+  <section class="page" id="p-keys">
+    <div class="card">
+      <h3>密钥与索引状态</h3>
+      <p class="hint">密钥与最近一次同步的整体情况</p>
+      <div id="k-status" class="statusline muted">加载中...</div>
+      <div style="margin-top:16px">
+        <button id="k-test" onclick="testKey()">测试 QQ 密钥是否有效</button>
+        <span class="muted" style="margin-left:8px">试运行一次，不会改动聊天记录</span>
+      </div>
+      <div id="k-test-out" style="margin-top:12px"></div>
+    </div>
+
+    <div class="card">
+      <h3>搜索数据 <span class="info" tabindex="0" data-tip="搜索靠它才能快速找到消息、按会话分组。&#10;新增聊天后点「更新」即可；换过位置或数据乱了就点「全部重建」。">?</span></h3>
+      <p class="hint">新增消息后点「更新」，只处理有变化的文件。</p>
+      <div id="ix-status" class="statusline muted">读取中…</div>
+      <div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap">
+        <button class="syncbtn" id="ix-upd" onclick="buildIndex(false)">更新搜索数据</button>
+        <button class="ghost syncbtn" id="ix-all" onclick="buildIndex(true)">全部重建（约 2 分钟）</button>
+      </div>
+      <div id="ix-out" style="margin-top:12px"></div>
+    </div>
+
+    <div class="card">
+      <h3>手动同步</h3>
+      <p class="hint">手动同步、自动同步时间与进度都已移到「同步」页。</p>
+      <button onclick="switchTab('sync')">前往「同步」页</button>
+    </div>
+
+    <div class="card" id="kcard-wx">
+      <h3>微信密钥 <span class="info" tabindex="0" data-tip="电脑版微信登录后，可以自动读取密钥。&#10;只读取，不改微信文件。&#10;微信升级或换号后可能失效，重新抓一次即可。">?</span></h3>
+      <p class="hint">微信已登录时点下面按钮；只读取，不改微信文件。</p>
+      <button id="wx-hunt-btn" onclick="wxHunt()">一键抓取微信密钥</button>
+      <span class="muted" id="wx-hunt-msg" style="margin-left:8px"></span>
+    </div>
+
+    <div class="card" id="kcard-qq">
+      <h3>QQ 密钥 <span class="info" tabindex="0" data-tip="QQ 密钥需要手动填写，软件不能一键读取。&#10;填好后会自动检查是否有效。&#10;密钥失效时，重新获取一份再填一次。">?</span></h3>
+      <div class="warn">⚠️ QQ 密钥无法一键读取，需要手动填写。</div>
+      <label>新密钥 <span class="muted">（填好后自动检查是否有效）</span></label>
+      <div style="display:flex;gap:8px">
+        <input type="password" id="qqkey-in" placeholder="粘贴新 QQ 密钥">
+        <button style="flex:0" onclick="saveQQKey()">保存并校验</button>
+      </div>
+      <p class="muted" style="margin-bottom:0">保存位置：<code id="k-path">(从本地配置读取)</code>。
+        检查通过后，下次同步会自动使用。这里不显示密钥原文，也不会联网上传。</p>
+      <div class="skill-line" style="display:flex;align-items:center;gap:8px;margin-top:8px;flex-wrap:wrap">
+        <span class="muted">密钥失效时，复制完整 skill 发给 AI，让它按流程恢复。</span>
+        <button class="ghost" onclick="copySkill()">复制完整 skill（发给 AI）</button>
+      </div>
+      <div id="qqkey-out" style="margin-top:10px"></div>
+    </div>
+  </section>
+
+  <section class="page" id="p-settings">
+    <div class="set-head">
+      <div class="set-tabs">
+        <button class="set-tab on" data-sec="appearance" onclick="setSettingsSec('appearance')">外观</button>
+        <button class="set-tab" data-sec="model" onclick="setSettingsSec('model')">模型服务</button>
+        <button class="set-tab" data-sec="paths" onclick="setSettingsSec('paths')">文件位置</button>
+        <button class="set-tab" data-sec="sync" onclick="setSettingsSec('sync')">同步文件</button>
+        <button class="set-tab" data-sec="maintenance" onclick="setSettingsSec('maintenance')">存储与维护</button>
+        <button class="set-tab" data-sec="startup" onclick="setSettingsSec('startup')">启动与关于</button>
+      </div>
+      <div class="set-actions">
+        <button onclick="saveSettings()" id="cfg-save">保存设置</button>
+        <button class="ghost" onclick="loadSettings()">重新载入</button>
+        <button class="ghost" onclick="testSettings()">检查配置</button>
+      </div>
+    </div>
+    <div class="set-msg" id="cfg-msg"></div>
+    <div class="muted set-path">配置只保存在本机，不会上传。
+      <span class="info" tabindex="0" data-tip="配置文件在 .local\config.json。&#10;里面的路径和密钥只留在这台电脑，不会发到网上。">?</span>
+      <span class="muted" id="cfg-path" style="font-size:11.5px;margin-left:6px"></span>
+    </div>
+
+    <div class="set-sec on" data-sec="appearance">
+    <div class="card">
+      <h3>外观</h3>
+      <p class="hint">改完立即生效，不用保存。</p>
+      <div class="row">
+        <div><label>主题</label>
+          <select id="ui-theme"><option value="auto">跟随系统</option><option value="light">浅色</option><option value="dark">深色</option></select>
+        </div>
+        <div><label>字号</label>
+          <select id="ui-font"><option value="s">小</option><option value="m">标准</option><option value="l">大</option></select>
+        </div>
+        <div><label>密度</label>
+          <select id="ui-density"><option value="compact">紧凑</option><option value="m">标准</option><option value="loose">宽松</option></select>
+        </div>
+      </div>
+    </div>
+    </div>
+    <div class="set-sec" data-sec="model">
+    <div class="card" id="kcard-model">
+      <h3>模型服务 <span class="info" tabindex="0" data-tip="支持常见的云端模型，也支持装在本机的模型。&#10;点服务名左边的圆点，选择当前使用哪一个。&#10;本机模型不用填密钥，聊天内容不会离开电脑。">?</span></h3>
+      <p class="hint">用云端或本机模型；不填也能正常搜索和阅读。</p>
+      <div id="prov-list"></div>
+      <div style="display:flex;gap:8px;margin-top:12px;flex-wrap:wrap">
+        <button class="ghost" style="flex:0" onclick="addProv('智谱GLM','https://open.bigmodel.cn/api/paas/v4/chat/completions','','glm-4-flash')">+ 智谱GLM</button>
+        <button class="ghost" style="flex:0" onclick="addProv('DeepSeek','https://api.deepseek.com/chat/completions','','deepseek-chat')">+ DeepSeek</button>
+        <button class="ghost" style="flex:0" onclick="addProv('Ollama 本地','http://127.0.0.1:11434/v1/chat/completions','','qwen2.5:7b')">+ Ollama 本地</button>
+        <button class="ghost" style="flex:0" onclick="addProv('LM Studio 本地','http://127.0.0.1:1234/v1/chat/completions','','')">+ LM Studio 本地</button>
+        <button class="ghost" style="flex:0" onclick="addProv('','','')">+ 自定义</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>对话提示词（可选） <span class="info" tabindex="0" data-tip="留空就用默认回答方式。&#10;可以在这里指定回答口吻、长度或人设。&#10;软件仍会自动加上时间和“只依据聊天记录回答”的规则。">?</span></h3>
+      <p class="hint">留空用默认。可以换口吻或指定回答风格。</p>
+      <textarea id="cfg-sysprompt" rows="4" placeholder="例如:你是我的私人秘书“小简”，回答简短直接，用列表优先。"></textarea>
+    </div>
+    </div>
+    <div class="set-sec" data-sec="paths">
+    <div class="card">
+      <h3>主文件夹（推荐只设这个） <span class="info" tabindex="0" data-tip="聊天记录、搜索数据、回收站默认都放在这里。&#10;如果下面单独填了路径，以单独填的为准。">?</span></h3>
+      <p class="hint">聊天记录、搜索数据、回收站都会放这里，其他路径可以留空。</p>
+      <div class="row">
+        <div style="flex:1"><label>数据根目录</label><input type="text" id="cfg-data-root" placeholder="留空 = 文档\ChatVault"></div>
+        <div style="flex:0"><button class="ghost" onclick="saveDataRoot()">保存并创建目录</button></div>
+        <div style="flex:0"><button class="ghost" onclick="checkEnv()">检查环境</button></div>
+      </div>
+      <div id="cfg-data-out" class="muted" style="margin-top:8px"></div>
+    </div>
+
+
+    <div class="card">
+      <h3>聊天记录文件夹 <span class="info" tabindex="0" data-tip="这里放已经导出的聊天记录，软件能直接搜索和阅读。&#10;它和下面的“原始聊天数据”不是一回事。&#10;软件只读，不会改你的文件。">?</span></h3>
+      <p class="hint">已经导出的聊天记录，用来搜索和阅读；软件只读。</p>
+      <label>QQ 聊天记录 <span class="info" tabindex="0" data-tip="填 QQ 聊天记录所在的文件夹。&#10;例如 D:\聊天记录\QQ。里面通常有“私聊”和“群聊”。">?</span></label><input type="text" id="cfg-qq-archive" placeholder="例如 D:\聊天记录\QQ">
+      <label>微信聊天记录 <span class="info" tabindex="0" data-tip="填微信聊天记录所在的文件夹。">?</span></label><input type="text" id="cfg-wx-archive" placeholder="例如 D:\聊天记录\微信">
+      <div class="row" style="margin-top:10px">
+        <div><label>QQ 总结保存位置</label><input type="text" id="cfg-qq-out"></div>
+        <div><label>微信总结保存位置</label><input type="text" id="cfg-wx-out"></div>
+      </div>
+    </div>
+
+    <div class="card" id="card-origins">
+      <h3>原始聊天数据（可选） <span class="info" tabindex="0" data-tip="这是 QQ/微信自己保存的数据，不是已经导出的聊天记录。&#10;只在想让软件自动收新消息时才需要填。&#10;不填也能正常看已有记录；填了还要去「密钥与索引」配密钥。">?</span></h3>
+      <p class="hint">只有想自动收新消息时才需要；不填也能看已有记录。</p>
+      <label>QQ 原始聊天数据 <span class="info" tabindex="0" data-tip="通常是一个叫 nt_msg.db 的文件。&#10;填文件本身，不是它所在的文件夹。">?</span></label>
+      <input type="text" id="cfg-qq-lib" placeholder="例如 D:\QQ\...\nt_msg.db">
+      <label>微信原始聊天数据 <span class="info" tabindex="0" data-tip="通常是一个叫 db_storage 的文件夹。&#10;填文件夹，不是里面的某个文件。">?</span></label>
+      <input type="text" id="cfg-wx-dbdir" placeholder="例如 C:\Users\你\Documents\xwechat_files\...\db_storage">
+      <p class="muted" style="margin:10px 0 0">只看以前的聊天：这里不用填。<br>想持续收新消息：填这里，再去「密钥与索引」配密钥。</p>
+    </div>
+
+    <div class="card">
+      <h3>存储与回收站 <span class="info" tabindex="0" data-tip="一般不用改。&#10;如果换了搜索数据的位置，需要到「密钥与索引」点一次「全量重建」，否则搜索会读旧文件。&#10;删除的会话只会搬到回收站，不会真正删除。">?</span></h3>
+      <p class="hint">一般不用改；留空会自动放在主文件夹里。</p>
+      <label>搜索数据文件 <span class="info" tabindex="0" data-tip="搜索用的数据库文件。&#10;换位置后要到「密钥与索引」点一次「全量重建」。&#10;留空 = 程序目录\.local\index.db。">?</span><span class="muted" id="cfg-index-hint"></span></label>
+      <input type="text" id="cfg-index-db" placeholder="留空 = 程序目录\.local\index.db">
+      <label style="margin-top:12px">回收站文件夹 <span class="info" tabindex="0" data-tip="删除会话时，整个文件夹会搬到这里。&#10;之后可以在这里点「恢复」搬回去。&#10;留空 = 用户目录\ChatVault回收站。">?</span><span class="muted" id="cfg-trash-hint"></span></label>
+      <input type="text" id="cfg-trash" placeholder="留空 = 用户目录\ChatVault回收站">
+    </div>
+    </div>
+    <div class="set-sec" data-sec="sync">
+    <div class="card">
+      <h3>密钥与同步文件 <span class="info" tabindex="0" data-tip="这些是同步用到的位置和文件。&#10;一般留空即可；不知道就别改。">?</span></h3>
+      <label>QQ 密钥文件 <span class="info" tabindex="0" data-tip="保存 QQ 密钥的文件。&#10;在「密钥与索引」页手动录入后会存到这里。">?</span></label><input type="text" id="cfg-qq-keyfile">
+
+      <div class="row" style="margin-top:10px">
+        <div><label>QQ 同步记录</label><input type="text" id="cfg-qq-log"></div>
+        <div><label>微信同步记录</label><input type="text" id="cfg-wx-log"></div>
+      </div>
+      <div class="row" style="margin-top:10px">
+        <div><label>QQ 新消息保存位置</label><input type="text" id="cfg-qq-incr"></div>
+        <div><label>微信新消息保存位置</label><input type="text" id="cfg-wx-incr"></div>
+      </div>
+
+      <label>QQ 账号 <span class="info" tabindex="0" data-tip="只用于在界面上显示，不参与任何操作。">?</span></label><input type="text" id="cfg-qq-uin">
+    </div>
+    </div>
+    <div class="set-sec" data-sec="maintenance">
+    <div class="card">
+      <h3>回收站 <span class="info" tabindex="0" data-tip="删除的会话会先放在这里。&#10;点「恢复」可以搬回原来的位置；目标已有同名文件夹时不会覆盖。">?</span></h3>
+      <p class="hint">删除的会话会先放在这里，可以随时恢复。</p>
+      <div id="trash-list" class="muted">读取中…</div>
+      <div style="margin-top:10px"><button class="ghost" onclick="loadTrash()">刷新回收站</button></div>
+    </div>
+
+    <div class="card">
+      <h3>数据体检 <span class="info" tabindex="0" data-tip="检查有没有漏掉、空着或显示不正常的消息。&#10;只查看，不会修改任何内容。">?</span></h3>
+      <p class="hint">检查有没有漏掉或显示不正常的消息，只看不改。</p>
+      <button class="ghost" onclick="runHealth()">运行体检</button>
+      <div id="health-out" style="margin-top:12px"></div>
+    </div>
+    </div>
+    <div class="set-sec" data-sec="startup">
+    <div class="card">
+      <h3>启动</h3>
+      <label style="display:flex;align-items:center;gap:8px">
+        <input type="checkbox" id="cfg-autostart" style="width:auto" onchange="saveAutostart()"> 开机自动启动工作台
+      </label>
+      <p class="muted" style="margin:6px 0 0">不用管理员权限，只影响这台电脑。</p>
+    </div>
+
+
+    <div class="card" id="about-card">
+      <h3>关于</h3>
+      <p class="hint">聊天档案工作台 · 搜索与阅读全在本机完成，归档只读。</p>
+      <div class="about-kv"><div class="k">版本</div><div class="v" id="about-ver">1.2.0</div></div>
+      <div class="about-kv"><div class="k">数据规模</div><div class="v" id="about-data">读取中…</div></div>
+      <div class="about-kv"><div class="k">快捷键</div><div class="v">Ctrl+K / Ctrl+F 聚焦搜索 · Ctrl+Enter 发送 · Alt+1~9、0 切换页面 · Esc 关闭菜单 · 消息右键可复制/收藏/导出</div></div>
+      <div class="about-kv"><div class="k">隐私</div><div class="v">只在本机运行；发给 AI 前会自动隐藏手机号、身份证等敏感信息；不改动聊天记录原件</div></div>
+    </div>
+    </div>
+    <div id="cfg-test-out"></div>
+  </section>
+
+  </div></div>
+</div>
+
+<!-- 删除会话：第 1 步（详情确认） -->
+<div class="modal-mask" id="del-mask1" style="display:none">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="del1-title">
+    <div class="modal-hd">
+      <div class="modal-ico">!</div>
+      <div style="min-width:0">
+        <h3 id="del1-title">删除整场会话</h3>
+        <div class="modal-sub" id="del1-sub">正在读取会话信息…</div>
+      </div>
+    </div>
+    <div class="modal-bd">
+      <div class="del-grid">
+        <div><span>消息条数</span><b id="del1-n">—</b></div>
+        <div><span>占用空间</span><b id="del1-mb">—</b></div>
+        <div><span>时间跨度</span><b id="del1-span">—</b></div>
+        <div><span>涉及目录</span><b id="del1-src">—</b></div>
+      </div>
+      <div class="del-note">归档与增量目录会移到 <code id="del1-path">（读取中）</code>，检索索引同步清理。文件不会被真正删除。</div>
+      <div class="del-err" id="del1-err" style="display:none"></div>
+    </div>
+    <div class="modal-ft">
+      <button class="ghost" id="del1-cancel">取消</button>
+      <button id="del1-next" disabled>继续</button>
+    </div>
+  </div>
+</div>
+
+<!-- 删除会话：第 2 步（最终确认） -->
+<div class="modal-mask" id="del-mask2" style="display:none">
+  <div class="modal modal-danger" role="dialog" aria-modal="true" aria-labelledby="del2-title">
+    <div class="modal-hd">
+      <div class="modal-ico danger">!</div>
+      <div style="min-width:0">
+        <h3 id="del2-title">最终确认</h3>
+        <div class="modal-sub" id="del2-sub"></div>
+      </div>
+    </div>
+    <div class="modal-bd">
+      <div class="del-warn">此操作会立即把该会话从工作台和检索结果中移除，且软件内无法撤销。删除后需到 <code id="del2-path">（读取中）</code> 手动搬回目录才能恢复。</div>
+      <label class="del-check">
+        <input type="checkbox" id="del2-ok">
+        <span>我已确认要删除「<b id="del2-name"></b>」并了解恢复方式。</span>
+      </label>
+      <div class="del-err" id="del2-err" style="display:none"></div>
+    </div>
+    <div class="modal-ft">
+      <button class="ghost" id="del2-cancel">取消</button>
+      <button class="danger" id="del2-go" disabled>确认删除</button>
+    </div>
+  </div>
+</div>
+
+<!-- 首次启动向导 -->
+<div class="setup-mask" id="setup-mask" style="display:none">
+  <div class="setup-box">
+    <div class="setup-side">
+      <div class="setup-brand">聊天档案工作台</div>
+      <ol class="setup-steps">
+        <li data-s="0" class="on"><b>1</b> 环境检查</li>
+        <li data-s="1"><b>2</b> 选择数据目录</li>
+        <li data-s="2"><b>3</b> 数据从哪来</li>
+        <li data-s="3"><b>4</b> 建检索索引</li>
+      </ol>
+      <div class="setup-tip">所有数据只留在本机<br>不上传、不改原始归档</div>
+    </div>
+    <div class="setup-main">
+      <div class="setup-page on" data-p="0">
+        <h2>先检查一下电脑</h2>
+        <p class="muted">检查系统组件和存放数据的位置是否能正常使用。</p>
+        <div id="setup-checks" class="setup-list"><div class="muted">检查中…</div></div>
+        <div class="setup-foot">
+          <span class="muted" style="margin-right:auto;font-size:11.5px">路径未配置好之前不会进入主界面</span>
+          <button id="setup-next0" onclick="setupGo(1)" disabled>继续</button>
+        </div>
+      </div>
+
+      <div class="setup-page" data-p="1">
+        <h2>配置文件地址 <span class="info" tabindex="0" data-tip="软件会把聊天记录、搜索数据和回收站都放在你选的位置。&#10;&#10;路径必须存在或能创建；保存后会自动建好子文件夹。&#10;以后路径被删了，下次打开会回到这里。">?</span></h2>
+        <p class="muted">先选一个放数据的地方，保存后自动建文件夹。</p>
+        <label style="margin-top:12px">主文件夹 <span class="info" tabindex="0" data-tip="软件的“大本营”。&#10;留空 = 文档\ChatVault。&#10;QQ/微信记录、搜索数据、回收站都会放在它下面。">?</span></label>
+        <div style="display:flex;gap:8px">
+          <input type="text" id="setup-root" placeholder="留空 = 文档\ChatVault">
+          <button class="ghost" style="flex:0" onclick="setupUseDefault()">用推荐目录</button>
+        </div>
+        <details class="path-help" style="margin-top:10px">
+          <summary>高级设置（一般不用改）</summary>
+          <div class="path-help-body">
+            <label>QQ 聊天记录文件夹 <span class="info" tabindex="0" data-tip="填已经导出的 QQ 聊天记录文件夹。&#10;里面通常有“私聊”和“群聊”两个子文件夹。&#10;不知道就留空，软件会自动放在主文件夹里。">?</span></label><input id="setup-qq-archive">
+            <label>微信聊天记录文件夹 <span class="info" tabindex="0" data-tip="填已经导出的微信聊天记录文件夹。&#10;不知道就留空。">?</span></label><input id="setup-wx-archive">
+            <label>搜索数据文件 <span class="info" tabindex="0" data-tip="让搜索更快的数据库文件。&#10;留空即可，软件会自动放在主文件夹里。">?</span></label><input id="setup-index">
+            <label>回收站文件夹 <span class="info" tabindex="0" data-tip="删除的会话会先搬到这里，之后还能恢复。&#10;留空即可。">?</span></label><input id="setup-trash">
+            <p class="muted" style="margin-top:8px">不确定就全部留空。</p>
+          </div>
+        </details>
+        <div class="setup-tree" id="setup-tree"></div>
+        <div id="setup-path-state" class="setup-path-state"></div>
+        <div id="setup-key-alert" class="setup-key-alert" style="display:none"></div>
+        <div class="setup-foot">
+          <button class="ghost" onclick="setupGo(0)">上一步</button>
+          <button id="setup-save" onclick="setupSavePaths()">保存并继续</button>
+        </div>
+      </div>
+
+      <div class="setup-page" data-p="2">
+        <h2>原始聊天数据（可选） <span class="info" tabindex="0" data-tip="想把以后的新消息也收进来，才需要填这里。&#10;QQ 一般填 nt_msg.db 文件；微信一般填 db_storage 文件夹。&#10;填好后还要在「密钥与索引」配密钥；只看已有记录可以都不填。">?</span></h2>
+        <p class="muted">这是 QQ/微信自己保存的数据，只在想自动收新消息时才需要。不填也能看已有记录。</p>
+        <div class="row">
+          <div><label>QQ 原始聊天数据 <span class="info" tabindex="0" data-tip="通常是一个叫 nt_msg.db 的文件。&#10;填文件本身，不是它所在的文件夹。">?</span></label><input id="setup-qq-lib" placeholder="nt_msg.db 文件"></div>
+          <div><label>微信原始聊天数据 <span class="info" tabindex="0" data-tip="通常是一个叫 db_storage 的文件夹。&#10;填文件夹，不是里面的某个文件。">?</span></label><input id="setup-wx-dbdir" placeholder="db_storage 文件夹"></div>
+        </div>
+        <div class="setup-key-alert" id="setup-key-alert2" style="display:none"></div>
+        <div id="setup-sources" class="setup-sources"></div>
+        <div class="setup-foot">
+          <button class="ghost" onclick="setupGo(1)">上一步</button>
+          <button class="ghost" onclick="setupGo(3)">先不填</button>
+          <button id="setup-origins-save" onclick="setupSaveOrigins()">保存并继续</button>
+        </div>
+      </div>
+
+      <div class="setup-page" data-p="3">
+        <h2>建立搜索数据</h2>
+        <p class="muted">建立后搜索更快、能按会话分组。第一次大约 2 分钟，也可以稍后再建。</p>
+        <div id="setup-scale" class="setup-tree" style="margin-top:14px">读取中…</div>
+        <div id="setup-idx-msg" class="muted" style="margin-top:10px"></div>
+        <div class="setup-foot">
+          <button class="ghost" onclick="setupFinish(false)">稍后建索引（可随时重建）</button>
+          <button id="setup-idx" onclick="setupBuildIndex()">开始建索引</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const $=id=>document.getElementById(id);
+// 会话页状态必须最早初始化：导航恢复函数在脚本前部就会访问它
+const CV={platform:'QQ',rows:[],sel:null,busy:false};
+// 页面脚本出错时直接在底部显示，避免“卡住但没有任何提示”
+window.addEventListener('error',e=>{
+  try{
+    let el=document.getElementById('js-error');
+    if(!el){
+      el=document.createElement('div'); el.id='js-error';
+      el.style.cssText='position:fixed;left:12px;right:12px;bottom:12px;z-index:9999;'
+        +'background:#3a1a18;color:#ff6b60;border:1px solid #ff6b60;border-radius:10px;'
+        +'padding:10px 14px;font-size:12px;white-space:pre-wrap;box-shadow:0 10px 30px rgba(0,0,0,.4)';
+      document.body.appendChild(el);
+    }
+    el.textContent='页面脚本出错：'+(e.message||'未知错误');
+  }catch(x){}
+});
+// 设置页共享状态：必须在任何页面提前调用前就初始化，避免 TDZ 报错
+let rawCfg={};
+let providers=[], activeProv=0;
+// 左侧菜单顺序（只影响本机显示，存在浏览器 localStorage）
+const NAV_KEY='cv.navOrder';
+const DEFAULT_NAV=[...document.querySelectorAll('.navbtn')].map(b=>b.dataset.p);
+// ---------------- 外观（本地记忆，不写 config） ----------------
+const UI_KEY='cv.ui';
+const UI_DEF={theme:'auto',font:'m',density:'m'};
+let UI={...UI_DEF};
+try{ UI={...UI_DEF,...JSON.parse(localStorage.getItem(UI_KEY)||'{}')}; }catch(e){}
+const darkMQ=window.matchMedia?matchMedia('(prefers-color-scheme: dark)'):null;
+function uiTheme(){ return UI.theme==='auto'?((darkMQ&&darkMQ.matches)?'dark':'light'):UI.theme; }
+function applyUI(){
+  document.documentElement.dataset.theme=uiTheme();
+  document.documentElement.dataset.font=UI.font;
+  document.documentElement.dataset.density=UI.density;
+  const t=$('ui-theme'),f=$('ui-font'),d=$('ui-density');
+  if(t)t.value=UI.theme; if(f)f.value=UI.font; if(d)d.value=UI.density;
+}
+function saveUI(){ try{localStorage.setItem(UI_KEY,JSON.stringify(UI));}catch(e){} applyUI(); }
+window.addEventListener('DOMContentLoaded',()=>{
+  applyUI();
+  [['ui-theme','theme'],['ui-font','font'],['ui-density','density']].forEach(([id,k])=>{
+    const el=$(id); if(el) el.addEventListener('change',()=>{ UI[k]=el.value; saveUI(); });
+  });
+  if(darkMQ&&darkMQ.addEventListener) darkMQ.addEventListener('change',()=>{ if(UI.theme==='auto') applyUI(); });
+});
+// ---------------- 全局前进 / 后退 ----------------
+const NAVS={stack:[],i:-1,lock:false};
+function navState(){
+  let conv='',plat='QQ',date='',contact='';
+  try{ conv=RD.conv||''; plat=RD.plat||'QQ'; date=RD.date||''; }catch(e){}
+  try{ contact=ctSelConv||''; }catch(e){}
+  return {tab:document.body.dataset.tab||'search',conv:conv,plat:plat,date:date,
+          q:($('s-q')?$('s-q').value:''),contact:contact};
+}
+function navSame(a,b){
+  return a.tab===b.tab&&a.conv===b.conv&&a.date===b.date&&a.q===b.q;
+}
+function navBtns(){
+  const b=$('nav-back'), f=$('nav-fwd');
+  if(b) b.disabled=NAVS.i<=0;
+  if(f) f.disabled=NAVS.i<0||NAVS.i>=NAVS.stack.length-1;
+}
+function navPush(){
+  if(NAVS.lock) return;
+  const s=navState();
+  if(NAVS.i>=0&&navSame(NAVS.stack[NAVS.i],s)) return;
+  NAVS.stack.splice(NAVS.i+1);
+  NAVS.stack.push(s);
+  if(NAVS.stack.length>80) NAVS.stack.shift();
+  NAVS.i=NAVS.stack.length-1;
+  navBtns();
+}
+async function navApply(s){
+  if(document.body.dataset.tab!==s.tab){
+    switchTab(s.tab);
+    await new Promise(r=>setTimeout(r,0));
+  }
+  if(s.tab==='convs'){
+    if(s.conv){
+      const rows=(typeof CV!=='undefined'&&CV.rows)||[];
+      const i=rows.findIndex(c=>c['会话']===s.conv);
+      if(i>=0) cvPick(i); else openReaderConv(s.plat,s.conv,s.date,0,'v-rd');
+    }else{
+      if(typeof CV!=='undefined') CV.sel=null;
+      document.querySelectorAll('.cv-row').forEach(x=>x.classList.remove('on'));
+      $('v-rd').innerHTML='<div class="rd-empty">← 选择左侧任意一场会话<br>直接阅读完整聊天记录（可导出、复制）</div>';
+    }
+  }else if(s.conv){
+    openReaderConv(s.plat,s.conv,s.date,0,s.tab==='search'?'rd':null);
+  }
+  if(s.tab==='search'&&s.q&&$('s-q')&&$('s-q').value!==s.q){
+    $('s-q').value=s.q; doSearch(true);
+  }
+}
+async function navBack(){
+  if(NAVS.i<=0) return;
+  NAVS.i--; NAVS.lock=true;
+  try{ await navApply(NAVS.stack[NAVS.i]); }finally{ NAVS.lock=false; navBtns(); }
+}
+async function navForward(){
+  if(NAVS.i>=NAVS.stack.length-1) return;
+  NAVS.i++; NAVS.lock=true;
+  try{ await navApply(NAVS.stack[NAVS.i]); }finally{ NAVS.lock=false; navBtns(); }
+}
+if($('nav-back')) $('nav-back').onclick=navBack;
+if($('nav-fwd')) $('nav-fwd').onclick=navForward;
+
+const PAGES={
+  search:['搜索','全库检索 · 结果按时间倒序 · 点结果看完整对话'],
+  time:['时间表','日历看每天聊了多少 · 点日期看当天记录'],
+  convs:['会话','按最近活跃排列 · 选一场直接读完整记录'],
+  chat:['对话','接入 GLM，附带本地脱敏上下文'],
+  contacts:['联系人','QQ 好友列表 · 昵称 / 备注 / QQ号 检索'],
+  fav:['收藏','星标消息 · 只存本机，可跳回原文'],
+  stats:['统计','消息量 · 年度/月度趋势 · 会话与发送者 Top'],
+  import:['导入','从手机导入聊天记录 · 检查文件夹 · 复制 md 归档'],
+  sync:['同步','手动同步 · 自动同步时间 · 进度与日志'],
+  keys:['密钥与索引','QQ / 微信密钥与检索索引管理'],
+  settings:['设置','配置项可视化管理，保存即生效'],
+};
+function switchTab(p){
+  document.querySelectorAll('.navbtn').forEach(x=>x.classList.remove('on'));
+  document.querySelectorAll('.page').forEach(x=>x.classList.remove('on'));
+  document.body.dataset.tab=p;
+  if(p!=='sync' && window._syTimer){ clearInterval(window._syTimer); window._syTimer=null; }
+  try{ localStorage.setItem('cv.tab',p); }catch(e){}
+  const b=document.querySelector('.navbtn[data-p="'+p+'"]');
+  if(b){b.classList.add('on'); $('p-'+p).classList.add('on');
+    const m=PAGES[p]||['',''];
+    $('tb-title').textContent=m[0]; $('tb-desc').textContent=m[1];}
+  // 注意：这几个加载函数依赖后面才声明的 let（TDZ），必须延后到本轮脚本执行完再调
+  if(p==='search') setTimeout(()=>{ if(typeof loadScope==='function') loadScope(); },0);
+  if(p==='time') setTimeout(()=>{ if(typeof tmLoad==='function') tmLoad(0,0); },0);
+  if(p==='convs') setTimeout(()=>{ if(typeof loadConvList==='function'){
+    CV.busy=false;  // 上一次异常可能把状态卡死，进入会话页时强制复位
+    loadConvList(true);
+  } },0);
+  if(p==='keys') setTimeout(()=>{ if(typeof loadIndex==='function') loadIndex(); },0);
+  if(p==='sync') setTimeout(()=>{ if(typeof loadSyncStatus==='function') loadSyncStatus(); },0);
+  if(p==='contacts') setTimeout(()=>{ if(typeof loadContacts==='function') loadContacts(); },0);
+  if(p==='fav') setTimeout(()=>{ if(typeof loadFavs==='function') loadFavs(); },0);
+  if(p==='stats') setTimeout(()=>{ if(typeof loadStats==='function') loadStats(); },0);
+  navPush();
+}
+document.querySelectorAll('.navbtn').forEach(b=>b.onclick=()=>{
+  switchTab(b.dataset.p);
+  if(b.dataset.p==='contacts') loadContacts();
+});
+const bootQ=new URLSearchParams(location.search);
+// 启动切换放到脚本末尾执行：那时所有 const/let 都已初始化，避免 TDZ 中断
+const lastTab=(()=>{try{return localStorage.getItem('cv.tab')||''}catch(e){return ''}})();
+// ---------------- 左侧菜单排序 ----------------
+function readNavOrder(){
+  try{
+    const a=JSON.parse(localStorage.getItem(NAV_KEY)||'[]');
+    return Array.isArray(a)?a.filter(x=>typeof x==='string'):[];
+  }catch(e){ return []; }
+}
+function applyNavOrder(order){
+  const nav=document.querySelector('nav'); if(!nav) return;
+  const items=[...nav.querySelectorAll('.navbtn')];
+  const map=new Map(items.map(b=>[b.dataset.p,b]));
+  const final=[];
+  for(const p of (order||[])) if(map.has(p)&&!final.includes(p)) final.push(p);
+  for(const p of DEFAULT_NAV) if(map.has(p)&&!final.includes(p)) final.push(p);
+  for(const b of items) if(!final.includes(b.dataset.p)) final.push(b.dataset.p);
+  final.forEach(p=>nav.appendChild(map.get(p)));
+}
+function tabOrder(){
+  return [...document.querySelectorAll('.navbtn')].map(b=>b.dataset.p);
+}
+function saveNavOrder(){
+  try{ localStorage.setItem(NAV_KEY, JSON.stringify(tabOrder())); }catch(e){}
+
+}
+let NAV_DRAG=null;
+function initNavDnD(){
+  document.querySelectorAll('.navbtn').forEach(btn=>{
+    if(btn.dataset.dndBound) return;
+    btn.dataset.dndBound='1';
+    btn.draggable=true;
+    btn.addEventListener('dragstart',e=>{
+      NAV_DRAG=btn; btn.classList.add('dragging');
+      try{ e.dataTransfer.effectAllowed='move'; e.dataTransfer.setData('text/plain',''); }catch(err){}
+    });
+    btn.addEventListener('dragend',()=>{
+      btn.classList.remove('dragging'); NAV_DRAG=null; saveNavOrder();
+    });
+    btn.addEventListener('dragover',e=>{
+      if(!NAV_DRAG||NAV_DRAG===btn) return;
+      e.preventDefault();
+      const r=btn.getBoundingClientRect();
+      const after=(e.clientY-r.top)>r.height/2;
+      const nav=btn.parentNode;
+      if(after) nav.insertBefore(NAV_DRAG,btn.nextSibling);
+      else nav.insertBefore(NAV_DRAG,btn);
+    });
+    btn.addEventListener('drop',e=>{ e.preventDefault(); saveNavOrder(); });
+  });
+}
+function renderNavOrder(){
+  return; // 已改为直接拖动左侧菜单，设置页不再提供列表式排序
+}
+
+// ---------------- 设置页分区 ----------------
+function setSettingsSec(name){
+  document.querySelectorAll('.set-tab[data-sec]').forEach(b=>b.classList.toggle('on',b.dataset.sec===name));
+  document.querySelectorAll('.set-sec[data-sec]').forEach(s=>s.classList.toggle('on',s.dataset.sec===name));
+  try{ localStorage.setItem('cv.settingsSec',name); }catch(e){}
+}
+function initSettingsSec(){
+  let name='appearance';
+  try{ name=localStorage.getItem('cv.settingsSec')||'appearance'; }catch(e){}
+  setSettingsSec(name);
+}
+
+// ---------------- 左右分栏拖动 ----------------
+const SPLIT_KEY='cv.split.';
+function splitLeft(sp){
+  if(sp.dataset.split==='contacts') return $('ct-side');
+  return sp.previousElementSibling;
+}
+function initSplitters(){
+  document.querySelectorAll('.splitter[data-split]').forEach(sp=>{
+    if(sp.dataset.bound) return;
+    sp.dataset.bound='1';
+    sp.tabIndex=0;
+    const key=SPLIT_KEY+sp.dataset.split;
+    const left=splitLeft(sp); if(!left) return;
+    const saved=parseInt(localStorage.getItem(key)||'',10);
+    if(saved>0) left.style.flex='0 0 '+saved+'px';
+    const clamp=v=>{
+      const cw=sp.parentElement.clientWidth||0;
+      const min=sp.dataset.split==='contacts'?220:(sp.dataset.split==='time'?380:280);
+      const max=Math.max(min,cw-300);
+      return Math.max(min,Math.min(max,v));
+    };
+    const start=e=>{
+      if(e.button!==undefined && e.button!==0) return;
+      e.preventDefault();
+      const startX=e.clientX, startW=left.getBoundingClientRect().width;
+      sp.classList.add('dragging'); document.body.style.userSelect='none';
+      const move=ev=>{ left.style.flex='0 0 '+clamp(startW+(ev.clientX-startX))+'px'; };
+      const up=()=>{
+        sp.classList.remove('dragging'); document.body.style.userSelect='';
+        try{ localStorage.setItem(key,String(Math.round(left.getBoundingClientRect().width))); }catch(err){}
+        document.removeEventListener('pointermove',move);
+        document.removeEventListener('pointerup',up);
+      };
+      document.addEventListener('pointermove',move);
+      document.addEventListener('pointerup',up);
+    };
+    sp.addEventListener('pointerdown',start);
+    sp.addEventListener('dblclick',()=>{
+      try{ localStorage.removeItem(key); }catch(e){}
+      left.style.flex=''; left.style.width='';
+      toast('已恢复默认宽度');
+    });
+    sp.addEventListener('keydown',e=>{
+      if(e.key!=='ArrowLeft'&&e.key!=='ArrowRight') return;
+      e.preventDefault();
+      const w=clamp(left.getBoundingClientRect().width+(e.key==='ArrowRight'?16:-16));
+      left.style.flex='0 0 '+w+'px';
+      try{ localStorage.setItem(key,String(Math.round(w))); }catch(err){}
+    });
+  });
+  window.addEventListener('resize',()=>{
+    document.querySelectorAll('.splitter[data-split]').forEach(sp=>{
+      const left=splitLeft(sp); if(!left||!left.style.flex) return;
+      const cw=sp.parentElement.clientWidth; if(!cw) return;
+      const min=sp.dataset.split==='contacts'?220:(sp.dataset.split==='time'?380:280);
+      const max=Math.max(min,cw-300);
+      const w=left.getBoundingClientRect().width;
+      if(w>max) left.style.flex='0 0 '+max+'px';
+      if(w<min) left.style.flex='0 0 '+min+'px';
+    });
+  });
+}
+
+function initTips(){
+  let tip=$('tipbox');
+  if(!tip){ tip=document.createElement('div'); tip.id='tipbox'; document.body.appendChild(tip); }
+  const show=el=>{
+    const t=el.getAttribute('data-tip')||''; if(!t) return;
+    tip.textContent=t; tip.style.display='block';
+    const r=el.getBoundingClientRect();
+    let x=r.left, y=r.bottom+8;
+    if(x+tip.offsetWidth>innerWidth-10) x=innerWidth-tip.offsetWidth-10;
+    if(y+tip.offsetHeight>innerHeight-10) y=r.top-tip.offsetHeight-8;
+    tip.style.left=Math.max(10,x)+'px'; tip.style.top=Math.max(10,y)+'px';
+  };
+  const hide=()=>{ tip.style.display='none'; };
+  document.querySelectorAll('.info[data-tip]').forEach(el=>{
+    if(el.dataset.tipBound) return;
+    el.dataset.tipBound='1';
+    const text=el.getAttribute('data-tip')||'';
+    el.title=text;  // JS 万一失效时，浏览器原生提示仍能给出完整说明
+    el.addEventListener('mouseenter',()=>{ el.title=''; show(el); });
+    el.addEventListener('focus',()=>{ el.title=''; show(el); });
+    el.addEventListener('mouseleave',()=>{ el.title=text; hide(); });
+    el.addEventListener('blur',()=>{ el.title=text; hide(); });
+  });
+  document.addEventListener('scroll',hide,true);
+}
+initTips();
+applyNavOrder(readNavOrder());
+initNavDnD();
+initSplitters();
+initSettingsSec();
+setupAuto();
+window.addEventListener('DOMContentLoaded',initTips);
+window.addEventListener('DOMContentLoaded',()=>{
+  if(bootQ.get('adv')==='1'){ $('s-adv').style.display='flex'; $('s-toggle').classList.add('on'); loadConvs(); }
+  const q0=bootQ.get('q');
+  if(q0){ $('s-q').value=q0; $('s-clear').style.display='block'; doSearch(true); }
+});
+
+function esc(s){const d=document.createElement('div');d.textContent=s;return d.innerHTML;}
+
+// ---------------- 检索 + 气泡阅读器 ----------------
+const SS={page:0,limit:50,total:0,items:[],q:'',conv:'',regex:false,busy:false,sel:null};
+
+function avaColor(seed){
+  let h=0; for(const c of String(seed||'?')) h=(h*31+c.charCodeAt(0))%360;
+  return 'hsl('+h+',58%,52%)';
+}
+function hl(text,q,regex){
+  text=String(text==null?'':text);
+  if(!q) return esc(text);
+  let re;
+  try{ re=new RegExp(regex?q:q.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'),'gi'); }
+  catch(e){ return esc(text); }
+  let out='',last=0,m,guard=0;
+  while((m=re.exec(text))!==null && guard++<500){
+    if(m.index>last) out+=esc(text.slice(last,m.index));
+    out+='<mark>'+esc(m[0])+'</mark>';
+    last=m.index+m[0].length;
+    if(!m[0]) re.lastIndex++;
+  }
+  return out+esc(text.slice(last));
+}
+function whenLabel(date,time){
+  if(!date) return time?time.slice(0,5):'';
+  if(date.slice(-3)==='-00') return date.slice(0,7)+(time?' '+time.slice(0,5):'');
+  return date+(time?' '+time.slice(0,5):'');
+}
+function typeLabel(k){
+  return {media:'媒体',card:'卡片',system:'系统',json:'富文本',unknown:'未解析',huge:'超长'}[k]||'';
+}
+
+async function loadConvs(force){
+  if(!force && $('s-conv').options.length>2) return;
+  try{
+    const d=await fetch('/api/convs?platform='+$('s-platform').value).then(r=>r.json());
+    const rows=(d.会话||[]);
+    $('s-conv').innerHTML='<option value="">全部会话（'+rows.length+'）</option>'+rows.map(c=>
+      '<option value="'+escAttr(c['会话'])+'">'+(c['群']?'群':'私聊')+' · '+esc(c['会话名'])+' ('+c['条数']+')</option>').join('');
+  }catch(e){}
+}
+async function loadSenders(){
+  const conv=$('s-conv').value, plat=$('s-platform').value;
+  const dl=$('s-sender-list'); if(!dl) return;
+  if(!conv){ dl.innerHTML=''; return; }
+  try{
+    const d=await fetch('/api/senders?platform='+encodeURIComponent(plat)+'&conv='+encodeURIComponent(conv)).then(r=>r.json());
+    dl.innerHTML=(d['发送者']||[]).map(x=>'<option value="'+escAttr(x['发送者'])+'">'+x['条数']+' 条</option>').join('');
+  }catch(e){}
+}
+
+async function loadScope(){
+  try{
+    const d=await fetch('/api/index/status').then(r=>r.json());
+    const p=(d['平台']||{})[$('s-platform').value]||{};
+    $('s-scope').textContent=p['消息']?(p['消息'].toLocaleString()+' 条 / '+p['会话']+' 个会话'):'尚未建立索引';
+  }catch(e){}
+}
+
+let SGroup=false;
+function toggleGroup(){
+  SGroup=!SGroup;
+  const b=$('s-group-btn');
+  if(b){ b.classList.toggle('on',SGroup); b.textContent=SGroup?'分组中':'分组'; }
+  doSearch(true);
+}
+function skCards(n){
+  let h='';
+  for(let i=0;i<(n||3);i++)
+    h+='<div class="sk"><div class="sk-l"></div><div class="sk-l"></div><div class="sk-l"></div></div>';
+  return h;
+}
+async function doSearch(reset){
+  const q=$('s-q').value.trim();
+  const from=$('s-from').value, to=$('s-to').value;
+  if(from && to && from>to){
+    $('s-list').innerHTML='<div class="sq-empty" style="color:var(--bad)">'
+      +'<b>起始日期比结束日期晚</b><br>这样查不到东西，把两个日期调过来再试</div>';
+    return;
+  }
+  if(!q && !$('s-conv').value && !$('s-sender').value.trim() && !from && !to){
+    $('s-list').innerHTML='<div class="sq-empty">输入关键词，或在「筛选」里选一个会话 / 发送者 / 起止日期<br>'
+      +'<span style="font-size:12px">只选日期、不填关键词也能看那段时间的记录</span></div>';
+    return;
+  }
+  if(SS.busy) return;
+  if(reset){ SS.page=0; SS.items=[]; }
+  SS.q=q; SS.conv=$('s-conv').value; SS.regex=$('s-regex').checked; SS.busy=true;
+  $('s-btn').disabled=true;
+  if(reset){ $('s-list').innerHTML='<div class="sq-sum">检索中…</div>'+skCards(3); }
+  const p=new URLSearchParams({
+    platform:$('s-platform').value, q:q, conv:SS.conv, regex:SS.regex?'1':'0',
+    from:$('s-from').value, to:$('s-to').value, sender:$('s-sender').value.trim(),
+    all:$('s-all').checked?'1':'0', offset:SS.page*SS.limit, limit:SS.limit
+  });
+  let d={};
+  try{ d=await fetch('/api/search?'+p).then(r=>r.json()); }
+  catch(e){ $('s-list').innerHTML='<div class="sq-empty">检索失败：'+esc(String(e))+'</div>'; SS.busy=false; $('s-btn').disabled=false; return; }
+  SS.busy=false; $('s-btn').disabled=false;
+  if(d['错误']){ $('s-list').innerHTML='<div class="sq-empty">'+esc(d['错误'])+'</div>'; return; }
+  const rows=d['结果']||[];
+  SS.total=d['总数']||0; SS.items=SS.items.concat(rows);
+  if(reset) pushHist(q);
+  if(reset && !rows.length){ $('s-list').innerHTML='<div class="sq-empty">没有匹配「'+esc(q)+'」的消息<br><span style="font-size:12px">换个词、关掉筛选，或把索引重建一次</span></div>'; return; }
+  const sum='<div class="sq-sum"><b>'+SS.total.toLocaleString()+'</b>'+(d['封顶']?'+':'')+' 条'
+    +' <span class="sep">·</span> 用时 '+(d['用时']||0)+'s'
+    +' <span class="sep">·</span> 第 '+(SS.page+1)+' 页'
+    +(d['正则']?' <span class="sep">·</span> 正则模式':'')+'</div>';
+  let cards;
+  if(SGroup){
+    const order=[], map={};
+    rows.forEach((it,idx)=>{
+      const k=it['会话']||'';
+      if(!map[k]){ map[k]=[]; order.push(k); }
+      map[k].push({it:it,i:SS.page*SS.limit+idx});
+    });
+    cards=order.map(k=>{
+      const g=map[k];
+      return '<div class="hit-group"><div class="hit-group-hd">'+esc(g[0].it['会话名']||k)
+        +' <span class="muted">· '+g.length+' 条</span></div>'
+        +g.map(x=>hitHTML(x.it,x.i)).join('')+'</div>';
+    }).join('');
+  }else{
+    cards=rows.map((it,i)=>hitHTML(it,SS.page*SS.limit+i)).join('');
+  }
+  const more=(SS.items.length<SS.total)?
+    '<div class="hitc-more"><button class="ghost" onclick="doSearch(false)">加载更多（已显示 '+SS.items.length+' / '+SS.total+'）</button></div>':'';
+  $('s-list').innerHTML=sum+cards+more;
+  if(reset && rows.length) openReader(0);
+}
+
+function filterSender(who){
+  if(!who || who==='我' || who==='未知') return;
+  const conv=RD.conv||'';
+  switchTab('search');
+  $('s-adv').style.display='flex'; $('s-toggle').classList.add('on');
+  $('s-q').value=''; $('s-clear').style.display='none';
+  loadConvs().then(()=>{
+    $('s-conv').value=conv;
+    loadSenders();
+    $('s-sender').value=who;
+    doSearch(true);
+  });
+}
+
+function hitHTML(it,i){
+  const g=String(it['会话']||'').indexOf('群聊')===0;
+  const who=it['我']?'我':(it['发送者']||'未知');
+  const tl=typeLabel(it['类型']);
+  return '<div class="hitc" data-i="'+i+'" onclick="openReader('+i+')">'
+    +'<div class="hitc-hd">'
+      +'<div class="hitc-av" style="background:'+avaColor(it['会话'])+'">'+esc((it['会话名']||'?').charAt(0))+'</div>'
+      +'<div class="hitc-nm" title="'+escAttr(it['会话名'])+'">'+esc(it['会话名'])+'</div>'
+      +'<span class="hitc-badge">'+(g?'群':'私聊')+'</span>'
+      +'<div class="hitc-when">'+esc(whenLabel(it['日期'],it['时间']))+'</div>'
+    +'</div>'
+    +'<div class="hitc-tx"><span class="who'+(it['我']?' nm-me':'')+'">'+esc(who)+'：</span>'
+      +hl(it['显示'],SS.q,SS.regex)+'</div>'
+    +'<div class="hitc-meta">'+(tl?'<span>'+tl+'</span>':'')+(it['引用']?'<span>· 引用了上一条</span>':'')
+      +'<span style="margin-left:auto">查看完整对话 ›</span></div>'
+  +'</div>';
+}
+
+async function openReader(i){
+  const it=SS.items[i]; if(!it) return;
+  SS.sel=it;
+  document.querySelectorAll('.hitc').forEach(x=>x.classList.toggle('on', +x.dataset.i===i));
+  $('rd').innerHTML='<div class="rd-empty">载入对话…</div>';
+  const p=new URLSearchParams({platform:it['平台'],conv:it['会话'],date:it['日期'],id:it['id']});
+  let d={};
+  try{ d=await fetch('/api/conv?'+p).then(r=>r.json()); }
+  catch(e){ $('rd').innerHTML='<div class="rd-empty">载入失败：'+esc(String(e))+'</div>'; return; }
+  renderReader(d,it,'rd',it['平台']);
+}
+async function openReaderConv(platform,conv,date,anchorId,boxId){
+  const boxId2=boxId||'rd';
+  const p=new URLSearchParams({platform:platform,conv:conv,date:date||'',id:anchorId||0});
+  $(boxId2).innerHTML='<div class="rd-empty">载入对话…</div>';
+  let d={};
+  try{ d=await fetch('/api/conv?'+p).then(r=>r.json()); }
+  catch(e){ $(boxId2).innerHTML='<div class="rd-empty">载入失败：'+esc(String(e))+'</div>'; return; }
+  if(d['错误']){ $(boxId2).innerHTML='<div class="rd-empty">'+esc(d['错误'])+'</div>'; return; }
+  renderReader(d, anchorId?{id:anchorId}:null, boxId2, platform);
+  navPush();
+}
+
+let RD={conv:'',name:'',plat:'QQ',box:'rd',date:'',days:[],msgs:[]};
+const RD_MAP={};
+function rdOf(el){
+  const box=(el&&el.closest)?el.closest('.rd'):null;
+  return RD_MAP[box?box.id:(RD.box||'rd')]||RD;
+}
+function renderReader(d,anchor,boxId,platform){
+  const box=$(boxId||'rd');
+  const bid0=boxId||'rd';
+  const msgs=d['消息']||[];
+  const days=d['日期列表']||[];
+  const cur=d['日期']||'';
+  RD={conv:d['会话']||'',name:d['会话名']||'',plat:platform||RD.plat||'QQ',
+      box:bid0,date:cur,days:days,msgs:msgs};
+  RD_MAP[bid0]=RD;
+  if(!msgs.length){ box.innerHTML='<div class="rd-empty">这场对话没有可显示的消息</div>'; return; }
+  const bid=bid0+'-body';
+  const idx=days.findIndex(x=>x['日期']===cur);
+  const md=d['模式'];
+  const okDate=/^\d{4}-\d{2}-\d{2}$/.test(cur);
+  const minD=(days[0]&&/^\d{4}-\d{2}-\d{2}$/.test(days[0]['日期']))?days[0]['日期']:'';
+  const maxD=(days.length&&/^\d{4}-\d{2}-\d{2}$/.test(days[days.length-1]['日期']))?days[days.length-1]['日期']:'';
+  const subTxt=(String(d['会话']||'').indexOf('群聊')===0?'群聊':'私聊')
+    +' · 共 '+(d['总数']||msgs.length).toLocaleString()+' 条 · '
+    +(md==='day' ? ('当天 '+msgs.length+' 条')
+      : md==='day_cut' ? ('当天前 '+msgs.length+' 条（消息过多，已截取）')
+      : md==='window' ? ('定位附近 '+msgs.length+' 条（当天消息过多，已截取）')
+      : ('最早 '+msgs.length+' 条'));
+  const head='<div class="rd-hd">'
+    +'<div class="lead"><div class="ttl" title="'+escAttr(d['会话名']||'')+'">'+esc(d['会话名']||'')+'</div>'
+    +'<div class="sub">'+esc(subTxt)+'</div></div>'
+    +'<div class="rd-nav">'
+      +'<button '+(idx<=0?'disabled':'')+' onclick="rdJump(-1,this)" title="前一天">‹</button>'
+      +'<input type="date" value="'+escAttr(okDate?cur:'')+'"'
+        +(minD?' min="'+escAttr(minD)+'"':'')+(maxD?' max="'+escAttr(maxD)+'"':'')
+        +' onchange="rdGoDate(this.value,this)" title="跳到某一天">'
+      +'<button '+(idx<0||idx>=days.length-1?'disabled':'')+' onclick="rdJump(1,this)" title="后一天">›</button>'
+      +'<button onclick="rdLatest(this)" title="跳到最新一天">最新</button>'
+      +'<button onclick="rdCopyDay(this)" title="复制当天全部消息">复制</button>'
+      +'<button onclick="rdExport(this)" title="导出整场对话（Markdown）">导出</button>'
+    +'</div></div>';
+  let body='',lastDay='',prevWho=null,prevTs=0,bi=0;
+  for(const m of msgs){
+    const mi=bi++;
+    if(m['日期']!==lastDay){ body+='<div class="day-sep"><span>'+esc(whenLabel(m['日期'],null))+'</span></div>'; lastDay=m['日期']; prevWho=null; }
+    const curWho=(m['我']?'我':(m['发送者']||'未知'));
+    const same=(curWho===prevWho)&&(m['ts']-prevTs<300000);
+    prevWho=curWho; prevTs=m['ts'];
+    const hi = anchor && m['id']===anchor['id'];
+    const sys = m['类型']==='system';
+    const media = (m['类型']==='media'||m['类型']==='card'||m['类型']==='json');
+    const who=m['我']?'我':(m['发送者']||'未知');
+    const inner=(m['引用']?'<div class="q">'+esc(m['引用'])+'</div>':'')+hl(m['显示'],SS.q,SS.regex);
+    if(sys){
+      body+='<div class="bub sysrow'+(hi?' hi':'')+'" data-mi="'+mi+'"><div class="col"><div class="bl sys">'+inner+'</div></div></div>';
+    }else{
+      body+='<div class="bub'+(m['我']?' me':'')+(hi?' hi':'')+(same?' cont':'')+'" data-mi="'+mi+'">'
+        +'<div class="av"'+(same?' style="visibility:hidden"':' style="background:'+avaColor(who)+'"')+'>'+esc(who.charAt(0))+'</div>'
+        +'<div class="col">'+((m['我']||same)?'':'<div class="nm" style="cursor:pointer" data-w="'+escAttr(who)+'" title="只看此人在这段对话里说过什么" onclick="filterSender(this.dataset.w)">'+esc(who)+'</div>')
+        +'<div class="bl'+(media?' media':'')+'">'+inner+'</div>'
+        +'<div class="tm">'+(same?'':esc((m['时间']||'').slice(0,5)))+'</div></div></div>';
+    }
+  }
+  box.innerHTML=head+'<div class="rd-body" id="'+bid+'">'+body+'</div>';
+  const el=box.querySelector('.bub.hi');
+  if(el) el.scrollIntoView({block:'center'});
+  else { const b=$(bid); b.scrollTop=b.scrollHeight; }
+}
+
+function rdJump(delta,el){
+  const r=rdOf(el); if(!r.conv) return;
+  const p=new URLSearchParams({platform:r.plat,conv:r.conv,date:r.date||'',nav:delta});
+  fetch('/api/conv?'+p).then(x=>x.json()).then(d=>{
+    if(!d['日期']) return;
+    openReaderConv(r.plat,r.conv,d['日期'],0,r.box);
+  });
+}
+function rdGoDate(v,el){
+  const r=rdOf(el);
+  if(!r.conv||!v) return;
+  openReaderConv(r.plat,r.conv,v,0,r.box);
+}
+function rdLatest(el){
+  const r=rdOf(el);
+  if(!r.conv||!(r.days||[]).length) return;
+  openReaderConv(r.plat,r.conv,r.days[r.days.length-1]['日期'],0,r.box);
+}
+function rdCopyDay(el){
+  const r=rdOf(el);
+  if(!(r.msgs||[]).length){ toast('当天没有可复制的消息'); return; }
+  copyText(r.msgs.map(msgLine).join('\n'));
+}
+function rdCopyMsg(i,el){
+  const r=rdOf(el);
+  const m=(r.msgs||[])[i]; if(!m) return;
+  copyText(msgLine(m));
+}
+function rdExport(el, fmt){
+  const r=rdOf(el);
+  if(!r.conv){ toast('先打开一场对话'); return; }
+  fmt=fmt||'md';
+  const url='/api/export?platform='+encodeURIComponent(r.plat)+'&conv='+encodeURIComponent(r.conv)
+    +'&format='+encodeURIComponent(fmt);
+  fetch(url).then(rr=>{
+    if(!rr.ok) throw new Error('HTTP '+rr.status);
+    const cd=rr.headers.get('Content-Disposition')||'';
+    let name=(r.name||'对话')+'_'+r.plat+'.'+fmt;
+    const mm=/filename\*=UTF-8''([^;]+)/i.exec(cd);
+    if(mm){ try{ name=decodeURIComponent(mm[1]); }catch(e){} }
+    return rr.blob().then(b=>({b:b,name:name}));
+  }).then(({b,name})=>{
+    const a=document.createElement('a');
+    a.href=URL.createObjectURL(b); a.download=name;
+    document.body.appendChild(a); a.click();
+    setTimeout(()=>{ try{URL.revokeObjectURL(a.href);}catch(e){} a.remove(); },2000);
+    toast('正在导出：'+name);
+  }).catch(e=>toast('导出失败：'+e));
+}
+
+$('s-btn').onclick=()=>doSearch(true);
+$('s-q').addEventListener('keydown',e=>{ if(e.key==='Enter') doSearch(true); });
+$('s-q').addEventListener('input',()=>{ $('s-clear').style.display=$('s-q').value?'block':'none'; });
+$('s-clear').onclick=()=>{ $('s-q').value=''; $('s-clear').style.display='none'; $('s-q').focus(); };
+$('s-toggle').onclick=()=>{
+  const a=$('s-adv'); const on=a.style.display==='none';
+  a.style.display=on?'flex':'none'; $('s-toggle').classList.toggle('on',on);
+  if(on) loadConvs();
+};
+$('s-platform').onchange=()=>{ loadConvs(true).then(loadSenders); loadScope(); };
+$('s-conv').addEventListener('change',loadSenders);
+['s-conv','s-from','s-to','s-sender','s-all','s-regex'].forEach(id=>{
+  $(id).addEventListener('change',()=>{ if(SS.total) doSearch(true); });
+});
+// 平台记忆 + 搜索历史
+const HIST_KEY='cv.hist', PLAT_KEY='cv.plat';
+function histList(){ try{return JSON.parse(localStorage.getItem(HIST_KEY)||'[]')}catch(e){return []} }
+function renderHist(){
+  const box=$('s-hist'); if(!box) return;
+  const h=histList();
+  box.innerHTML=h.length?('<div class="muted" style="margin-bottom:6px">最近搜索</div>'+
+    h.map(q=>'<button class="ghost hist-chip" data-q="'+escAttr(q)+'">'+esc(q)+'</button>').join('')):'';
+}
+function pushHist(q){
+  q=String(q||'').trim(); if(!q) return;
+  let h=histList().filter(x=>x!==q); h.unshift(q); h=h.slice(0,20);
+  try{ localStorage.setItem(HIST_KEY,JSON.stringify(h)); }catch(e){}
+  renderHist();
+}
+$('s-hist').addEventListener('click',e=>{
+  const b=e.target.closest('.hist-chip'); if(!b) return;
+  $('s-q').value=b.dataset.q; $('s-clear').style.display='block'; doSearch(true);
+});
+try{
+  const p=localStorage.getItem(PLAT_KEY);
+  if(p==='QQ'||p==='微信'){ $('s-platform').value=p; $('v-platform').value=p; }
+}catch(e){}
+$('s-platform').addEventListener('change',()=>{ try{localStorage.setItem(PLAT_KEY,$('s-platform').value)}catch(e){} });
+$('v-platform').addEventListener('change',()=>{ try{localStorage.setItem(PLAT_KEY,$('v-platform').value)}catch(e){} });
+renderHist();
+loadScope();
+
+// ---------------- 时间表（日历） ----------------
+const TM={y:0,m:0,plat:'QQ',sel:'',cal:null,day:null,busy:false,tick:0,
+  boot:(()=>{try{return new URLSearchParams(location.search).get('date')||''}catch(e){return ''}})()};
+function tmPad(n){ n=String(n); return n.length<2?'0'+n:n; }
+function tmYmd(y,m,d){ return y+'-'+tmPad(m)+'-'+tmPad(d); }
+function tmYm(y,m){ return y+'-'+tmPad(m); }
+function tmNum(n){
+  if(n>=10000) return (n/10000).toFixed(1).replace(/\.0$/,'')+'万';
+  if(n>=1000) return (n/1000).toFixed(1).replace(/\.0$/,'')+'k';
+  return String(n);
+}
+function tmWeek(dateStr){
+  const p=String(dateStr||'').split('-').map(Number);
+  if(p.length<3||!p[0]||!p[1]||!p[2]) return '';
+  return '日一二三四五六'[(new Date(p[0],p[1]-1,p[2])).getDay()]||'';
+}
+function tmTime(ts){
+  const s=String(ts||'');
+  if(s.length<12) return '';
+  const h=s.slice(8,10),mi=s.slice(10,12);
+  return (h==='00'&&mi==='00')?'':h+':'+mi;
+}
+async function tmLoad(y,m){
+  if(TM.busy) return;
+  if(TM.cal && !(y||m)){
+    tmRenderCalendar(); tmRenderFoot();
+    if(TM.sel) tmRenderDay(); else tmRenderIdle();
+    return;
+  }
+  TM.busy=true;
+  const grid=$('tm-grid');
+  if(!TM.cal) grid.innerHTML='<div class="tm-loading">正在统计每天的聊天条数…</div>';
+  const p=new URLSearchParams({platform:TM.plat});
+  if(y&&m){ p.set('year',y); p.set('month',m); }
+  let d={};
+  try{ d=await fetch('/api/calendar?'+p).then(r=>r.json()); }
+  catch(e){
+    TM.busy=false;
+    grid.innerHTML='<div class="tm-loading" style="color:var(--bad)">载入失败：'+esc(String(e))
+      +'<br><button class="ghost" style="margin-top:8px" onclick="tmReload()">重试</button></div>';
+    return;
+  }
+  TM.busy=false;
+  if(d['错误']){
+    grid.innerHTML='<div class="tm-loading" style="color:var(--bad)">'+esc(d['错误'])
+      +'<br><button class="ghost" style="margin-top:8px" onclick="tmReload()">重试</button></div>';
+    return;
+  }
+  TM.cal=d; TM.y=d['年']; TM.m=d['月'];
+  if(!TM.sel || TM.sel.slice(0,7)!==tmYm(TM.y,TM.m)) TM.sel='';
+  tmRenderCalendar(); tmRenderFoot();
+  if(TM.boot){
+    const bd=TM.boot; TM.boot='';
+    if(bd.slice(0,7)===tmYm(TM.y,TM.m)){ tmPick(bd); return; }
+  }
+  if(TM.sel) tmRenderDay(); else tmRenderIdle();
+}
+function tmReload(){ TM.cal=null; tmLoad(0,0); }
+function tmRenderCalendar(){
+  const y=TM.y, m=TM.m;
+  const days=(TM.cal&&TM.cal['天数'])||{};
+  if(!y||!m){ $('tm-grid').innerHTML=''; $('tm-ym').textContent='—'; return; }
+  const lead=(new Date(y,m-1,1).getDay()+6)%7;
+  const dim=new Date(y,m,0).getDate();
+  const now=new Date();
+  const today=tmYmd(now.getFullYear(),now.getMonth()+1,now.getDate());
+  let max=1;
+  for(const k in days) if(days[k]>max) max=days[k];
+  let h='';
+  for(let i=0;i<lead;i++) h+='<div class="tm-cell blank" aria-hidden="true"></div>';
+  for(let d=1;d<=dim;d++){
+    const key=tmYmd(y,m,d);
+    const n=days[key]||0;
+    const cls=['tm-cell'];
+    cls.push(n?'has':'dim');
+    if(key===today) cls.push('today');
+    if(key===TM.sel) cls.push('on');
+    const lv=n?Math.max(1,Math.min(3,Math.ceil(n/max*3))):0;
+    h+='<button class="'+cls.join(' ')+'" data-d="'+key+'"'+(n?'':' disabled')
+      +(lv?' data-lv="'+lv+'"':'')
+      +' title="'+escAttr(key+(n?' · '+n+' 条':' · 没有记录'))+'">'
+      +'<span class="tm-d">'+d+'</span>'
+      +(n?'<span class="tm-n">'+tmNum(n)+'</span>':'')
+      +'</button>';
+  }
+  const tail=(7-((lead+dim)%7))%7;
+  for(let i=0;i<tail;i++) h+='<div class="tm-cell blank" aria-hidden="true"></div>';
+  $('tm-grid').innerHTML=h;
+  $('tm-ym').textContent=y+' 年 '+m+' 月';
+  $('tm-month').value=tmYm(y,m);
+  const mn=String((TM.cal&&TM.cal['最早'])||'');
+  const mx=String((TM.cal&&TM.cal['最晚'])||'');
+  $('tm-prev').disabled=!!(mn.length>=6 && tmYm(y,m)<=(mn.slice(0,4)+'-'+mn.slice(4,6)));
+  $('tm-next').disabled=!!(mx.length>=6 && tmYm(y,m)>=(mx.slice(0,4)+'-'+mx.slice(4,6)));
+}
+function tmRenderFoot(){
+  const cal=TM.cal||{};
+  const total=cal['总计']||0, unknown=cal['未知']||0;
+  const nDays=Object.keys(cal['天数']||{}).length;
+  let h='<span>这个月共 <b>'+Number(total).toLocaleString()+'</b> 条 · 有记录 '+nDays+' 天</span>';
+  if(unknown){
+    const key=tmYm(TM.y,TM.m)+'-00';
+    h+='<button class="tm-unknown'+(TM.sel===key?' on':'')+'" data-d="'+key+'" '
+      +'title="这些消息只知道是这月、不知道具体哪天">不知道具体哪天 · '+Number(unknown).toLocaleString()+' 条</button>';
+  }
+  $('tm-foot').innerHTML=h;
+}
+function tmRenderIdle(){
+  $('tm-main').innerHTML='<div class="rd-empty">← 点日历上有数字的那天<br>这里列出那天聊过的人和群</div>';
+}
+async function tmPick(date){
+  const tk=++TM.tick;
+  TM.sel=date; TM.day=null;
+  tmRenderCalendar(); tmRenderFoot();
+  const box=$('tm-main');
+  box.innerHTML='<div class="rd-empty">正在查 '+esc(date)+' 的记录…</div>';
+  const p=new URLSearchParams({platform:TM.plat,from:date,to:date,all:'1',limit:'1'});
+  let d={};
+  try{ d=await fetch('/api/search?'+p).then(r=>r.json()); }
+  catch(e){
+    if(tk!==TM.tick) return;
+    box.innerHTML='<div class="sq-empty">载入失败：'+esc(String(e))
+      +'<br><button class="ghost" style="margin-top:8px" onclick="tmPick(\''+date+'\')">重试</button></div>';
+    return;
+  }
+  if(tk!==TM.tick) return;
+  if(d['错误']){ box.innerHTML='<div class="sq-empty">'+esc(d['错误'])+'</div>'; return; }
+  TM.day={date:date,total:d['总数']||0,groups:d['会话聚合']||[]};
+  tmRenderDay();
+}
+function tmRenderDay(){
+  const day=TM.day;
+  if(!day){ tmRenderIdle(); return; }
+  const unknow=String(day.date).slice(-3)==='-00';
+  const groups=day.groups||[];
+  const wd=unknow?'':tmWeek(day.date);
+  let h='<div class="tm-day"><div class="tm-day-hd">'
+    +'<div class="tm-day-lead">'
+      +'<div class="tm-day-date">'+esc(unknow?(day.date.slice(0,7)+'（不知道具体哪天）'):day.date)
+        +(wd?'<span class="tm-day-wd">周'+wd+'</span>':'')+'</div>'
+      +'<div class="tm-day-sub">共 '+Number(day.total||0).toLocaleString()+' 条 · '+groups.length+' 场会话</div>'
+    +'</div>'
+    +'<button class="ghost tm-day-open" onclick="tmToSearch()">在搜索页打开</button>'
+  +'</div>';
+  if(!day.total){
+    h+='<div class="sq-empty">这天没有聊天记录</div>';
+  }else if(!groups.length){
+    h+='<div class="sq-empty">当天消息太多，这里没法分组<br>'
+      +'<button class="ghost" style="margin-top:8px" onclick="tmToSearch()">去搜索页按日期看</button></div>';
+  }else{
+    h+='<div class="tm-list">'+groups.map((g,i)=>{
+      const name=g['会话名']||g['会话']||'?';
+      const isG=String(g['会话']||'').indexOf('群聊')===0;
+      const t=tmTime(g['最后']);
+      return '<div class="tm-conv" data-i="'+i+'" onclick="tmOpenConv('+i+')">'
+        +'<div class="ct-ava" style="background:'+avaColor(g['会话']||name)+'">'+esc(name.charAt(0))+'</div>'
+        +'<div class="tm-conv-main">'
+          +'<div class="nm">'+esc(name)+' <span class="hitc-badge">'+(isG?'群':'私聊')+'</span></div>'
+          +'<div class="sub">'+Number(g['条数']||0).toLocaleString()+' 条'+(t?' · 最后 '+t:'')+'</div>'
+        +'</div>'
+        +'<span class="tm-go">查看完整对话 ›</span>'
+      +'</div>';
+    }).join('')+'</div>';
+  }
+  h+='</div>';
+  $('tm-main').innerHTML=h;
+}
+async function tmOpenConv(i){
+  const day=TM.day; if(!day) return;
+  const g=(day.groups||[])[i]; if(!g) return;
+  const tk=++TM.tick;
+  const conv=g['会话'], name=g['会话名']||conv;
+  const box=$('tm-main');
+  box.innerHTML='<div class="tm-conv-hd">'
+    +'<button class="ghost tm-back" onclick="tmBackList()">← 回到当天清单</button>'
+    +'<div class="tm-conv-name">'+esc(name)+'</div>'
+    +'</div><div class="rd" id="tm-rd"></div>';
+  $('tm-rd').innerHTML='<div class="rd-empty">载入对话…</div>';
+  const p=new URLSearchParams({platform:TM.plat,conv:conv,date:day.date});
+  let d={};
+  try{ d=await fetch('/api/conv?'+p).then(r=>r.json()); }
+  catch(e){ if(tk===TM.tick) $('tm-rd').innerHTML='<div class="rd-empty">载入失败：'+esc(String(e))+'</div>'; return; }
+  if(tk!==TM.tick) return;
+  if(d['错误']){ $('tm-rd').innerHTML='<div class="rd-empty">'+esc(d['错误'])+'</div>'; return; }
+  renderReader(d, null, 'tm-rd', TM.plat);
+}
+function tmBackList(){ tmRenderDay(); }
+function tmToSearch(){
+  if(!TM.sel) return;
+  const d=TM.sel, unknow=String(d).slice(-3)==='-00';
+  let from=d, to=d;
+  if(unknow){
+    const y=Number(d.slice(0,4)), m=Number(d.slice(5,7));
+    from=tmYmd(y,m,1); to=tmYmd(y,m,new Date(y,m,0).getDate());
+    toast('这些记录只知道月份，已按整月去搜');
+  }
+  switchTab('search');
+  $('s-adv').style.display='flex'; $('s-toggle').classList.add('on');
+  $('s-q').value=''; $('s-clear').style.display='none';
+  $('s-platform').value=TM.plat;
+  $('s-conv').value=''; $('s-sender').value='';
+  $('s-from').value=from; $('s-to').value=to;
+  $('s-all').checked=true; $('s-regex').checked=false;
+  loadConvs(true).then(()=>doSearch(true));
+}
+function tmStep(delta){
+  if(!TM.y||!TM.m) return;
+  let y=TM.y, m=TM.m+delta;
+  if(m<1){ m=12; y--; }
+  if(m>12){ m=1; y++; }
+  TM.sel=''; tmLoad(y,m);
+}
+try{
+  const pl=localStorage.getItem('cv.tmPlat');
+  if(pl==='QQ'||pl==='微信'){ TM.plat=pl; $('tm-platform').value=pl; }
+}catch(e){}
+$('tm-prev').onclick=()=>tmStep(-1);
+$('tm-next').onclick=()=>tmStep(1);
+$('tm-latest').onclick=()=>{ TM.sel=''; TM.cal=null; tmLoad(0,0); };
+$('tm-month').onchange=e=>{
+  const p=String(e.target.value||'').split('-').map(Number);
+  if(p.length>=2&&p[0]&&p[1]){ TM.sel=''; tmLoad(p[0],p[1]); }
+};
+$('tm-platform').onchange=()=>{
+  TM.plat=$('tm-platform').value;
+  try{ localStorage.setItem('cv.tmPlat',TM.plat); }catch(e){}
+  TM.sel=''; TM.cal=null; tmLoad(0,0);
+};
+$('tm-grid').addEventListener('click',e=>{
+  const b=e.target.closest('.tm-cell.has'); if(b) tmPick(b.dataset.d);
+});
+$('tm-foot').addEventListener('click',e=>{
+  const b=e.target.closest('.tm-unknown'); if(b) tmPick(b.dataset.d);
+});
+
+// ---------------- 通用小工具：复制 / 提示 / 时间 ----------------
+function toast(msg){
+  let t=$('toastbox');
+  if(!t){ t=document.createElement('div'); t.id='toastbox'; t.className='toast'; document.body.appendChild(t); }
+  t.textContent=msg; t.classList.add('on');
+  clearTimeout(t._tid); t._tid=setTimeout(()=>t.classList.remove('on'),1700);
+}
+function fallbackCopy(txt,done,fail){
+  try{
+    const ta=document.createElement('textarea');
+    ta.value=txt; ta.style.cssText='position:fixed;left:-9999px;top:0';
+    document.body.appendChild(ta); ta.select();
+    const ok=document.execCommand('copy'); document.body.removeChild(ta);
+    ok?done():fail();
+  }catch(e){ fail(); }
+}
+function copyText(txt){
+  txt=String(txt==null?'':txt);
+  const done=()=>toast('已复制 '+(txt.length>200?(txt.length+' 字'):txt.slice(0,24)+(txt.length>24?'…':'')));
+  const fail=()=>toast('复制失败，请手动选中后 Ctrl+C');
+  if(navigator.clipboard && navigator.clipboard.writeText){
+    navigator.clipboard.writeText(txt).then(done,()=>fallbackCopy(txt,done,fail));
+  }else fallbackCopy(txt,done,fail);
+}
+function tsLabel(ts){
+  const s=String(ts||'');
+  if(s.length<8) return '';
+  const y=s.slice(0,4),mo=s.slice(4,6),d=s.slice(6,8);
+  const date=(d==='00')?(y+'-'+mo):(y+'-'+mo+'-'+d);
+  const h=s.slice(8,10),mi=s.slice(10,12);
+  return (h && h!=='00') ? (date+' '+h+':'+mi) : date;
+}
+function msgLine(m){
+  const who=m['我']?'我':(m['发送者']||'未知');
+  return (m['日期']||'')+' '+(m['时间']||'')+' '+who+'：'+String(m['显示']==null?m['正文']:m['显示']);
+}
+
+// ---------------- 会话列表页 ----------------
+
+function cvFilter(){
+  const q=$('v-q').value.trim().toLowerCase();
+  let rows=CV.rows.slice();
+  if($('v-onlyarch').checked) rows=rows.filter(c=>(c['条数']||0)>0);
+  if(q) rows=rows.filter(c=>{
+    const s=(c['会话名']||'')+' '+(c['会话']||'')+' '+(c['会话号']||'');
+    return s.toLowerCase().includes(q);
+  });
+  const sort=$('v-sort').value;
+  if(sort==='count') rows.sort((a,b)=>(b['条数']||0)-(a['条数']||0));
+  else if(sort==='name') rows.sort((a,b)=>String(a['会话名']||'').localeCompare(String(b['会话名']||''),'zh'));
+  return rows;
+}
+async function loadConvList(force){
+  if(CV.busy) return;
+  const plat=$('v-platform').value;
+  if(!force && CV.rows.length && CV.platform===plat){ renderConvList(); return; }
+  const CK='cv.convs.'+plat;
+  let cached=null;
+  try{ cached=JSON.parse(localStorage.getItem(CK)||'null'); }catch(e){}
+  // 旧版缓存格式不一致时直接丢弃，避免渲染异常把加载状态卡死
+  if(cached && (!Array.isArray(cached.rows) || !cached.rows.length
+      || typeof cached.rows[0] !== 'object' || !cached.rows[0] || !cached.rows[0]['会话'])){
+    cached=null;
+    try{ localStorage.removeItem(CK); }catch(e){}
+  }
+  CV.busy=true; CV.platform=plat;
+  let ctrl=null, timer=null;
+  try{
+    if(typeof AbortController==='function'){
+      ctrl=new AbortController();
+      timer=setTimeout(()=>ctrl.abort(), 8000);
+    }
+  }catch(e){ ctrl=null; }
+  try{
+    if(cached && Array.isArray(cached.rows) && cached.rows.length){
+      CV.rows=cached.rows; renderConvList();
+    }else{
+      $('v-list').innerHTML=skCards(5);
+    }
+    const opt=ctrl?{signal:ctrl.signal}:{};
+    const d=await fetch('/api/convs?platform='+encodeURIComponent(plat), opt).then(r=>r.json());
+    CV.rows=d['会话']||[];
+    try{ localStorage.setItem(CK, JSON.stringify({ts:Date.now(),rows:CV.rows})); }catch(e){}
+    renderConvList();
+  }catch(e){
+    console.error('会话列表加载失败', e);
+    $('v-list').innerHTML='<div class="sq-empty">载入失败<br>'
+      +'<button class="ghost" style="margin-top:8px" onclick="loadConvList(true)">重试</button></div>';
+  }finally{
+    if(timer) clearTimeout(timer);
+    CV.busy=false;
+  }
+}
+function renderConvList(){
+  const rows=cvFilter();
+  $('v-count').textContent='共 '+rows.length+' 场';
+  if(!rows.length){ $('v-list').innerHTML='<div class="sq-empty">没有匹配的会话</div>'; return; }
+  const MAX=800;
+  $('v-list').innerHTML=rows.slice(0,MAX).map((c,i)=>{
+    const isG=!!c['群'] || String(c['会话']||'').indexOf('群聊')===0;
+    const name=c['会话名']||c['会话']||'?';
+    return '<div class="cv-row'+(CV.sel&&CV.sel['会话']===c['会话']?' on':'')+'" data-i="'+i+'">'
+      +'<div class="ct-ava" style="background:'+avaColor(c['会话']||name)+'">'+esc(name.charAt(0))+'</div>'
+      +'<div style="min-width:0;flex:1">'
+        +'<div class="nm">'+hl(name,$('v-q').value.trim())+' <span class="hitc-badge">'+(isG?'群':'私聊')+'</span></div>'
+        +'<div class="sub">'+esc(String(c['条数']||0).toLocaleString()+' 条'+(c['我发']?' · 我发 '+c['我发']:''))+'</div>'
+      +'</div>'
+      +'<div class="when">'+esc(tsLabel(c['止']))+'</div>'
+      +'<button class="cv-del" data-del="'+i+'" title="删除整场（移到回收站，可还原）">删除</button>'
+    +'</div>';
+  }).join('');
+}
+function cvPick(i){
+  const c=cvFilter()[i]; if(!c) return;
+  CV.sel=c;
+  document.querySelectorAll('.cv-row').forEach(x=>x.classList.remove('on'));
+  const el=document.querySelector('.cv-row[data-i="'+i+'"]'); if(el) el.classList.add('on');
+  openReaderConv(CV.platform, c['会话'], '', 0, 'v-rd');
+}
+// ---------------- 删除会话：两步确认 ----------------
+let DEL_CTX=null;
+function delMask(id,on){ const m=$(id); if(m) m.style.display=on?'flex':'none'; }
+function delClose1(){ delMask('del-mask1',false); }
+function delClose2(){ delMask('del-mask2',false); }
+function delReset1(){
+  $('del1-sub').textContent='正在读取会话信息…';
+  $('del1-n').textContent='—'; $('del1-mb').textContent='—';
+  $('del1-span').textContent='—'; $('del1-src').textContent='—';
+  $('del1-err').style.display='none';
+  $('del1-next').disabled=true;
+}
+function delFill1(p){
+  $('del1-sub').textContent=DEL_CTX.name+' · '+DEL_CTX.c['会话'];
+  $('del1-n').textContent=(p['条数']==null?'—':String(p['条数']).toLocaleString()+' 条');
+  $('del1-mb').textContent=(p['占用MB']==null?'—':p['占用MB']+' MB');
+  const a=DEL_CTX.c['起'], b=DEL_CTX.c['止'];
+  $('del1-span').textContent=(a&&b)?(tsLabel(a)+' ~ '+tsLabel(b)):'—';
+  const dirs=p['目录']||[];
+  $('del1-src').textContent=dirs.length
+    ? (dirs.map(d=>d['来源']==='incr'?'增量':'归档').join(' + ')+' / '+dirs.length+' 份')
+    : '—';
+  $('del1-path').textContent=(p['中转站']||'（未配置）')+'\\ChatVault删除会话-*';
+  $('del1-err').style.display='none';
+  $('del1-next').disabled=false;
+}
+function delErr1(msg){
+  const e=$('del1-err'); e.textContent=msg; e.style.display='block';
+  $('del1-next').disabled=true;
+}
+async function cvDelete(i){
+  const c=cvFilter()[i]; if(!c) return;
+  DEL_CTX={i,c,name:c['会话名']||c['会话']||'?'};
+  delReset1();
+  delMask('del-mask1',true);
+  setTimeout(()=>{ const b=$('del1-cancel'); if(b) b.focus(); },0);
+  try{
+    const p=await fetch('/api/conv/delete',{method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({platform:CV.platform,conv:c['会话'],dry:true})}).then(x=>x.json());
+    if(p['错误']){ delErr1('无法读取会话信息：'+p['错误']); return; }
+    DEL_CTX.preview=p;
+    delFill1(p);
+  }catch(e){ delErr1('无法读取会话信息：'+e); }
+}
+function delNext(){
+  if(!DEL_CTX||!DEL_CTX.preview) return;
+  delClose1();
+  $('del2-sub').textContent=DEL_CTX.name+' · '+DEL_CTX.c['会话'];
+  $('del2-path').textContent=DEL_CTX.preview['中转站']||'（未配置）';
+  $('del2-name').textContent=DEL_CTX.name;
+  $('del2-ok').checked=false;
+  $('del2-go').disabled=true;
+  $('del2-err').style.display='none';
+  delMask('del-mask2',true);
+  setTimeout(()=>{ const b=$('del2-cancel'); if(b) b.focus(); },0);
+}
+async function delGo(){
+  if(!DEL_CTX||!$('del2-ok').checked) return;
+  const btn=$('del2-go'); btn.disabled=true; btn.textContent='删除中…';
+  try{
+    const r=await fetch('/api/conv/delete',{method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({platform:CV.platform,conv:DEL_CTX.c['会话'],protect:true})}).then(x=>x.json());
+    if(r['错误']){
+      $('del2-err').textContent='删除失败：'+r['错误'];
+      $('del2-err').style.display='block';
+      btn.disabled=false; btn.textContent='确认删除'; return;
+    }
+    delClose2();
+    CV.rows=[]; CV.sel=null;
+    $('v-rd').innerHTML='<div class="rd-empty">← 选择左侧任意一场会话<br>直接阅读完整聊天记录（可导出、复制）</div>';
+    loadConvList(true);
+    alert('已删除「'+DEL_CTX.name+'」\n索引内 '+r['条数']+' 条\n移到：'+r['中转站']);
+  }catch(e){
+    $('del2-err').textContent='删除失败：'+e;
+    $('del2-err').style.display='block';
+    btn.disabled=false; btn.textContent='确认删除';
+  }
+}
+$('del1-cancel').onclick=delClose1;
+$('del1-next').onclick=delNext;
+$('del2-cancel').onclick=delClose2;
+$('del2-ok').onchange=()=>{ $('del2-go').disabled=!$('del2-ok').checked; };
+$('del2-go').onclick=delGo;
+
+// ---------------- 首次启动向导 ----------------
+let SETUP=null;
+async function setupAuto(){
+  try{
+    const d=await fetch('/api/setup/state').then(r=>r.json());
+    if(!d['已完成']){ setupRender(d); setupShow(true); setupStep(0); }
+  }catch(e){ console.error('检查首次配置失败', e); }
+}
+function setupShow(on){ $('setup-mask').style.display=on?'flex':'none'; }
+function setupStep(n){
+  document.querySelectorAll('.setup-page').forEach(p=>p.classList.toggle('on',p.dataset.p===String(n)));
+  document.querySelectorAll('.setup-steps li').forEach(li=>li.classList.toggle('on',li.dataset.s===String(n)));
+}
+function setupGo(n){ setupStep(n); }
+function setupSources(d){
+  const pr=d['探测']||{}, qq=d['已有归档']||{}, p=d['路径']||{};
+  const qdbs=pr['QQ库']||[], wds=pr['微信库']||[];
+  let h='';
+  if(qq['QQ']) h+='<div class="setup-src" style="cursor:default"><b>✓ 已找到 QQ 归档</b><span>'+esc(p['QQ归档']||'')+'</span></div>';
+  if(qq['微信']) h+='<div class="setup-src" style="cursor:default"><b>✓ 已找到微信归档</b><span>'+esc(p['微信归档']||'')+'</span></div>';
+  if(qdbs.length) h+='<div class="setup-src" style="cursor:default"><b>发现本机 QQ 数据库</b><span>'+esc(qdbs[0])+'<br>导入前需要 QQ 密钥：完成后到「密钥与索引」录入并测试。</span></div>';
+  if(wds.length) h+='<div class="setup-src" style="cursor:default"><b>发现本机微信数据库</b><span>'+esc(wds[0])+'<br>完成后到「密钥与索引」点「一键抓取微信密钥」（微信需已登录）。</span></div>';
+  if(!h) h+='<div class="setup-src" style="cursor:default"><b>没有自动发现可用数据</b><span>可以先用空库，之后在「设置」或「密钥与索引」里导入。</span></div>';
+  $('setup-sources').innerHTML=h;
+}
+function setupRender(d){
+  SETUP=d;
+  const cs=d['检查']||[];
+  $('setup-checks').innerHTML=cs.length?cs.map(c=>
+    '<div class="setup-check"><span class="ico '+(c['正常']?'ok':'bad')+'">'+(c['正常']?'✓':'✗')+'</span>'+
+    '<div><b>'+esc(c['项'])+'</b><div class="muted">'+esc(c['值']||'')+'</div></div></div>').join('')
+    :'<div class="muted">没有检查项</div>';
+  $('setup-next0').disabled=!cs.length||!cs.every(c=>c['正常']);
+  const p=d['路径']||{};
+  const rootConfigured=(d['数据根来源']==='已配置');
+  $('setup-root').value=rootConfigured?(d['数据根']||''):'';
+  $('setup-root').placeholder='留空 = '+(d['数据根']||'文档\\ChatVault')+'（当前生效）';
+  $('setup-qq-archive').value=p['QQ归档']||'';
+  $('setup-wx-archive').value=p['微信归档']||'';
+  $('setup-index').value=p['索引']||'';
+  $('setup-trash').value=p['回收站']||'';
+  const og=d['原始']||{};
+  $('setup-qq-lib').value=og['QQ']||'';
+  $('setup-wx-dbdir').value=og['微信']||'';
+  $('setup-tree').textContent=(d['数据根']||'')+'\n'+
+    '├─ 归档\\QQ\\私聊、群聊\n'+
+    '├─ 归档\\微信\\私聊、群聊\n'+
+    '├─ 增量\\QQ、增量\\微信\n'+
+    '├─ 索引\\index.db\n'+
+    '├─ 回收站\\\n'+
+    '└─ 导出\\、密钥\\、日志\\';
+  setupSources(d);
+  const qq=d['已有归档']||{};
+  $('setup-scale').textContent='QQ 归档：'+(qq['QQ']?'已发现 md 文件':'未发现')+
+    ' · 微信归档：'+(qq['微信']?'已发现 md 文件':'未发现');
+  if(d['密钥']){
+    setupKeyAlert(d['密钥']);
+    setupKeyAlert(d['密钥'], 'setup-key-alert2');
+  }
+  setupPathState({路径:p, 路径存在:d['路径存在']||{}});
+}
+function setupUseDefault(){
+  const d=SETUP||{};
+  $('setup-root').value=d['数据根']||'';
+  $('setup-qq-archive').value='';
+  $('setup-wx-archive').value='';
+  $('setup-index').value='';
+  $('setup-trash').value='';
+  $('setup-path-state').innerHTML='<div class="row"><span class="ok">✓</span><span>已填入推荐目录；保存后自动创建标准子目录。</span></div>';
+}
+function setupPathError(msg){
+  $('setup-path-state').innerHTML='<div class="row"><span class="bad">✗</span><span>'+esc(msg)+'</span></div>';
+}
+function setupPathState(r){
+  const p=r['路径']||{}, ex=r['路径存在']||{};
+  const made=(r['新建']||[]).length;
+  const rows=Object.keys(p).map(k=>{
+    const has=(k in ex)?!!ex[k]:true;
+    const mark=has?'<span class="ok">✓</span>':'<span class="bad">✗</span>';
+    const note=has?'':' <span class="need">（不存在，保存时会尝试创建）</span>';
+    return '<div class="row">'+mark+'<span>'+esc(k)+'：'+esc(p[k]||'（未配置）')+note+'</span></div>';
+  }).join('');
+  const allOk=Object.keys(ex).every(k=>ex[k]);
+  const tail=(made||allOk)
+    ? '<div class="row"><span class="ok">✓</span><span>已保存'+(made?('，本次新建 '+made+' 个目录'):'')+'。</span></div>'
+    : '<div class="row"><span class="bad">✗</span><span>部分目录不存在；保存时会自动创建，失败请改用推荐目录。</span></div>';
+  $('setup-path-state').innerHTML=rows+tail;
+}
+function setupKeyAlert(k,id){
+  const el=$(id||'setup-key-alert'); if(!el) return;
+  const miss=[];
+  if(!k['QQ']) miss.push('QQ 密钥');
+  if(!k['微信']) miss.push('微信密钥');
+  if(!k['模型']) miss.push('模型 API Key');
+  if(!miss.length){ el.style.display='none'; el.innerHTML=''; return; }
+  el.style.display='block';
+  el.innerHTML='⚠️ <b>'+miss.map(esc).join('、')+' 未配置</b><br>'
+    +'不影响浏览已有归档；但同步、微信抓取或 AI 对话会不可用。可先进入，之后到「密钥与索引」补上。';
+}
+async function setupSavePaths(){
+  const b=$('setup-save'); if(!b) return;
+  b.disabled=true; b.textContent='保存中…';
+  const payload={
+    qq_archive:$('setup-qq-archive').value.trim(),
+    wechat_archive:$('setup-wx-archive').value.trim(),
+    index_db:$('setup-index').value.trim(),
+    trash:$('setup-trash').value.trim()
+  };
+  const root=$('setup-root').value.trim();
+  if(root) payload.data_root=root;
+  try{
+    const r=await fetch('/api/setup/paths',{method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify(payload)}).then(x=>x.json());
+    if(r['错误']){ setupPathError(r['错误']); return; }
+    SETUP=Object.assign(SETUP||{},r);
+    setupPathState(r);
+    setupKeyAlert(r['密钥']||{});
+    if(!r['已完成']){
+      setupPathError('目录还没准备好：请检查路径是否存在、是否有写权限，或点「用推荐目录」。');
+      return;
+    }
+    setupGo(2);
+  }catch(e){ setupPathError('保存失败：'+e); }
+  finally{ b.disabled=false; b.textContent='保存并继续'; }
+}
+async function setupSaveOrigins(){
+  const b=$('setup-origins-save'); if(!b) return;
+  b.disabled=true; b.textContent='保存中…';
+  const payload={
+    qq_lib:$('setup-qq-lib').value.trim(),
+    wechat_db_dir:$('setup-wx-dbdir').value.trim()
+  };
+  try{
+    const r=await fetch('/api/setup/paths',{method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify(payload)}).then(x=>x.json());
+    if(r['错误']){
+      const el=$('setup-key-alert2');
+      el.style.display='block'; el.textContent='保存失败：'+r['错误'];
+      return;
+    }
+    SETUP=Object.assign(SETUP||{},r);
+    setupKeyAlert(r['密钥']||{}, 'setup-key-alert2');
+    setupGo(3);
+  }catch(e){
+    const el=$('setup-key-alert2');
+    el.style.display='block'; el.textContent='保存失败：'+e;
+  }finally{ b.disabled=false; b.textContent='保存并继续'; }
+}
+async function setupBuildIndex(){
+  const b=$('setup-idx'); b.disabled=true; b.textContent='建立中…';
+  $('setup-idx-msg').textContent='已开始，第一次大约 2 分钟。';
+  try{
+    await fetch('/api/index/build',{method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({force:true})}).then(x=>x.json());
+  }catch(e){
+    $('setup-idx-msg').textContent='启动失败：'+e;
+    b.disabled=false; b.textContent='重试'; return;
+  }
+  const t=setInterval(async()=>{
+    try{
+      const s=await fetch('/api/index/status').then(x=>x.json());
+      const p=s['进度']||{};
+      $('setup-idx-msg').textContent=(p['text']||'处理中')+(p['total']?('（'+p['done']+'/'+p['total']+'）'):'');
+      if(!p['running']){ clearInterval(t); setupFinish(true); }
+    }catch(e){}
+  },2000);
+}
+async function setupFinish(mark){
+  let ok=false;
+  try{
+    const s=await fetch('/api/setup/state').then(x=>x.json());
+    ok=!!s['已完成'];
+  }catch(e){}
+  if(!ok){
+    setupGo(1);
+    setupPathError('请先保存有效的文件地址，再进入主界面。');
+    return;
+  }
+  try{
+    await fetch('/api/setup/done',{method:'POST',headers:{'Content-Type':'application/json'},
+      body:'{}'}).then(x=>x.json());
+  }catch(e){}
+  setupShow(false);
+  CV.rows=[]; CV.sel=null;
+  switchTab('convs');
+}
+
+$('v-list').addEventListener('click',e=>{
+  const del=e.target.closest('.cv-del');
+  if(del){ e.stopPropagation(); cvDelete(parseInt(del.dataset.del||'0')); return; }
+  const row=e.target.closest('.cv-row'); if(row) cvPick(parseInt(row.dataset.i||'0'));
+});
+$('v-platform').onchange=()=>{ CV.rows=[]; CV.sel=null; loadConvList(true); };
+$('v-q').addEventListener('input',()=>{ $('v-clear').style.display=$('v-q').value?'block':'none'; renderConvList(); });
+$('v-clear').onclick=()=>{ $('v-q').value=''; $('v-clear').style.display='none'; renderConvList(); };
+$('v-onlyarch').addEventListener('change',renderConvList);
+$('v-sort').addEventListener('change',renderConvList);
+
+// ---------------- 联系人页 ----------------
+let ctData=null, ctTab='person', ctSel=null;
+async function loadContacts(force){
+  if(ctData && !force){ renderContacts(); return; }
+  $('ct-list').innerHTML=skCards(5);
+  try{ ctData=await fetch('/api/contacts').then(x=>x.json()); }
+  catch(e){ $('ct-list').innerHTML='<p class="bad" style="padding:12px">载入失败: '+esc(String(e))+'</p>'; return; }
+  renderContacts();
+}
+function ctSwitch(t){
+  ctTab=t; ctSel=null;
+  document.querySelectorAll('.ct-tab').forEach(x=>x.classList.toggle('on', x.dataset.t===t));
+  renderContacts();
+  $('ct-detail').innerHTML='<p class="muted">从左侧选择一项查看详情。</p>';
+}
+function ctMatches(){
+  if(!ctData) return [];
+  const q=$('ct-q').value.trim().toLowerCase();
+  let arr=ctTab==='group'?ctData.群聊:ctData.联系人;
+  if(ctTab==='dir') arr=arr.filter(c=>(c.会话||[]).length);
+  if(!q) return arr;
+  return arr.filter(c=>
+    String(c.显示名||c.群名||'').toLowerCase().includes(q)||
+    String(c.昵称||'').toLowerCase().includes(q)||
+    String(c.备注||'').toLowerCase().includes(q)||
+    String(c.qq||c.群号||'').includes(q));
+}
+function ctRowHTML(c,i){
+  const isG=ctTab==='group';
+  const name=isG?(c.群名||('群'+c.群号)):(c.显示名||'QQ'+(c.qq||'?'));
+  const sub=isG?('群号 '+c.群号+(c.会话&&c.会话.length?' · 有归档':''))
+               :('QQ'+(c.qq||'?')+(c.备注&&c.昵称?' · 昵称:'+c.昵称:''));
+  const seed=c.qq||c.群号||name||i;
+  const cov=c.覆盖||{};
+  const tag=cov.最早?(' · '+cov.最早+'~'+cov.最晚):'';
+  return '<div class="ct-row'+(ctSel&&JSON.stringify(ctSel)===JSON.stringify(c)?' on':'')+'" onclick="pickContact('+i+')">'+
+    '<div class="ct-ava" style="background:'+avaColor(seed)+'">'+esc((name||'?')[0])+'</div>'+
+    '<div style="min-width:0;flex:1"><div class="nm">'+hl(name,$('ct-q').value.trim())+'</div>'+
+    '<div class="sub">'+esc(sub)+tag+'</div></div></div>';
+}
+function renderContacts(){
+  if(!ctData){ loadContacts(); return; }
+  const list=ctMatches();
+  const MAX=300;
+  const idx=ctData.索引||{};
+  const tip=(idx.私聊===false)
+    ? '<p class="muted" style="padding:10px 12px">联系人索引尚未生成，请先到「同步」页点一次「同步 QQ」。</p>'
+    : '';
+  $('ct-list').innerHTML=tip+((list.slice(0,MAX).map(ctRowHTML).join(''))||
+    '<p class="muted" style="padding:12px">无匹配</p>');
+  $('ct-count').textContent='共 '+list.length+' 条'+(list.length>MAX?'（显示前'+MAX+'，可输入关键词缩小）':'');
+  // 右侧详情默认空着等于白屏，自动选中第一条
+  if(!ctSel && list.length){ pickContact(0); }
+}
+function pickContact(i){
+  const c=ctMatches()[i]; if(!c) return;
+  ctSel=c;
+  renderContacts();
+  const isG=ctTab==='group';
+  const name=isG?(c.群名||('群'+c.群号)):(c.显示名||'QQ'+(c.qq||'?'));
+  const d=$('ct-detail');
+  const cov=c.覆盖||{};
+  const covTxt=cov.最早?(cov.最早+' ~ '+cov.最晚+'（'+cov.月份数+' 个月）'):'无归档记录';
+  const dirs=(c.会话||[]).length?
+    '<div class="ct-field"><div class="k">归档会话</div><div class="v">'+
+      (c.会话||[]).map(x=>'<span class="pill">'+esc(x)+'</span>').join(' ')+'</div></div>'
+    :'<div class="ct-field"><div class="k">归档会话</div><div class="v muted">无（不在主归档目录中）</div></div>';
+  const fields=isG?[
+    '<div class="ct-field"><div class="k">群名称</div><div class="v">'+esc(c.群名||'(未获取到群名)')+'</div></div>',
+    '<div class="ct-field"><div class="k">群号</div><div class="v">'+esc(c.群号)+'</div></div>',
+    '<div class="ct-field"><div class="k">群成员</div><div class="v">'+esc(String(c.成员数||0))+' 人</div></div>',
+    '<div class="ct-field"><div class="k">记录覆盖</div><div class="v">'+esc(covTxt)+'</div></div>',
+    dirs,
+  ]:[
+    '<div class="ct-field"><div class="k">备注</div><div class="v">'+esc(c.备注||'(无备注)')+'</div></div>',
+    '<div class="ct-field"><div class="k">昵称</div><div class="v">'+esc(c.昵称||'(无昵称)')+'</div></div>',
+    '<div class="ct-field"><div class="k">QQ号</div><div class="v">'+esc(c.qq||'(未知)')+'</div></div>',
+    '<div class="ct-field"><div class="k">记录覆盖</div><div class="v">'+esc(covTxt)+'</div></div>',
+    dirs,
+    '<div class="ct-field"><div class="k">内部uid</div><div class="v muted" style="font-size:12px">'+esc(c.uid||'')+'</div></div>',
+  ];
+  const searchKw=isG?(c.群号||c.群名):(c.qq||c.显示名);
+  ctSelKw=String(searchKw||''); ctSelName=name; ctSelConv=c.会话键||(c.会话||[])[0]||'';
+  d.innerHTML=
+    '<div class="ct-hero">'+
+      '<div class="ct-ava big" style="background:'+avaColor(c.qq||c.群号||name)+'">'+esc((name||'?')[0])+'</div>'+
+      '<div><div class="ct-hero-name">'+esc(name)+'</div>'+
+      '<div class="muted">'+(isG?('群聊 · '+esc(covTxt)):esc(covTxt))+'</div></div></div>'+fields.join('')+
+    '<div style="margin-top:16px;display:flex;gap:8px;flex-wrap:wrap">'+
+      (isG?'<button onclick="ctShowMembers()">👥 查看群成员</button>':'')+
+      '<button onclick="ctOpenReader()">📖 打开完整对话</button>'+
+      '<button class="ghost" onclick="ctGoSearch()">🔍 在这'+(isG?'个群':'场对话')+'里搜关键词</button>'+
+      '<button class="ghost" onclick="ctGoAsk()">💬 问 AI</button>'+
+    '</div>';
+}
+// ---------------- 全局横幅 ----------------
+function showBanner(msg){
+  let el=$('global-banner');
+  if(!el){ el=document.createElement('div'); el.id='global-banner';
+    el.className='gbanner'; document.body.appendChild(el); }
+  el.innerHTML='<span>⚠️ '+esc(msg)+'</span>'
+    +'<span class="x" onclick="this.parentNode.style.display=\'none\'">✕</span>';
+  el.style.display='flex';
+}
+async function checkBanner(){
+  try{
+    const d=await fetch('/api/sync/status').then(r=>r.json());
+    const msg=d['最近失败']||d['错误']||'';
+    if(msg) showBanner(msg);
+  }catch(e){}
+}
+
+// ---------------- 收藏 ----------------
+let FAV={items:[],keys:new Set()};
+async function loadFavs(){
+  const box=$('fav-list');
+  if(box) box.innerHTML='<div class="sk"><div class="sk-l"></div><div class="sk-l"></div><div class="sk-l"></div></div>';
+  try{
+    const d=await fetch('/api/favorites').then(r=>r.json());
+    FAV.items=d['收藏']||[];
+    FAV.keys=new Set(FAV.items.map(x=>x.key));
+    renderFavs();
+  }catch(e){ if(box) box.innerHTML='<div class="sq-empty">载入失败：'+esc(String(e))+'</div>'; }
+}
+function renderFavs(){
+  const box=$('fav-list'); if(!box) return;
+  const q=(($('fav-q')&&$('fav-q').value)||'').trim().toLowerCase();
+  const rows=FAV.items.filter(x=>!q||
+    String(x['正文']||'').toLowerCase().includes(q)||
+    String(x['会话名']||'').toLowerCase().includes(q)||
+    String(x['发送者']||'').toLowerCase().includes(q));
+  box.innerHTML=rows.length?rows.map((x,i)=>
+    '<div class="fav-row"><div class="fav-main">'
+      +'<div class="fav-hd"><span class="fav-nm">'+esc(x['会话名']||x['会话'])+'</span>'
+      +'<span>'+esc(x['日期']||'')+' '+esc(x['时间']||'')+'</span>'
+      +'<span>· '+esc(x['发送者']||'')+'</span></div>'
+      +'<div class="fav-tx">'+esc(x['正文']||'')+'</div></div>'
+      +'<div class="fav-act"><button class="ghost" onclick="favOpen('+i+')">打开</button>'
+      +'<button class="ghost" onclick="favRemove('+i+')">移除</button></div></div>'
+  ).join(''):'<div class="sq-empty">还没有收藏<br><span style="font-size:12px">在消息上右键即可收藏</span></div>';
+  const c=$('fav-count'); if(c) c.textContent='共 '+rows.length+' 条';
+}
+async function favToggleMsg(platform,conv,convName,date,mid,time,sender,text){
+  try{
+    const d=await fetch('/api/favorites/toggle',{method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({platform,conv,conv_name:convName,date,id:mid,time,sender,text})}).then(r=>r.json());
+    if(d['错误']){toast(d['错误']);return;}
+    const key=[platform,conv,date,mid].join('|');
+    if(d.on){FAV.keys.add(key);toast('⭐ 已收藏');} else {FAV.keys.delete(key);toast('已取消收藏');}
+    if(document.body.dataset.tab==='fav') loadFavs();
+  }catch(e){toast('操作失败：'+e);}
+}
+async function favRemove(i){
+  const x=FAV.items[i]; if(!x) return;
+  try{
+    await fetch('/api/favorites/remove',{method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({key:x.key})}).then(r=>r.json());
+    FAV.items.splice(i,1); FAV.keys.delete(x.key); renderFavs(); toast('已移除');
+  }catch(e){toast('移除失败：'+e);}
+}
+function favOpen(i){
+  const x=FAV.items[i]; if(!x) return;
+  switchTab('search');
+  setTimeout(()=>openReaderConv(x['平台'],x['会话'],x['日期']||'',x['id']||0,'rd'),60);
+}
+
+// ---------------- 统计 ----------------
+function stBars(items,labelKey,valKey){
+  const rows=items||[]; const max=Math.max(1,...rows.map(x=>x[valKey]||0));
+  return '<div class="st-bars">'+rows.map(x=>{
+    const h=Math.max(2,Math.round(100*(x[valKey]||0)/max));
+    return '<div class="st-bar" title="'+escAttr(String(x[valKey]||0))+'"><div class="b" style="height:'+h+'%"></div>'
+      +'<div class="l">'+esc(String(x[labelKey]||''))+'</div></div>';
+  }).join('')+'</div>';
+}
+function stRows(items,nameKey,valKey){
+  const rows=items||[]; const max=Math.max(1,...rows.map(x=>x[valKey]||0));
+  return '<div class="st-rows">'+rows.map(x=>
+    '<div class="st-row"><div class="name" title="'+escAttr(String(x[nameKey]||''))+'">'+esc(String(x[nameKey]||''))+'</div>'
+    +'<div class="track"><div class="fill" style="width:'+Math.round(100*(x[valKey]||0)/max)+'%"></div></div>'
+    +'<div class="num">'+Number(x[valKey]||0).toLocaleString()+'</div></div>').join('')+'</div>';
+}
+async function loadStats(){
+  const box=$('st-body'); if(!box) return;
+  box.innerHTML='<div class="sk"><div class="sk-l"></div><div class="sk-l"></div><div class="sk-l"></div></div>';
+  try{
+    const d=await fetch('/api/stats?platform='+encodeURIComponent($('st-platform').value)).then(r=>r.json());
+    if(d['错误']){box.innerHTML='<div class="sq-empty">'+esc(d['错误'])+'</div>';return;}
+    $('st-kpi').innerHTML=
+      '<div class="stat-kpi"><div class="k">总消息</div><div class="v">'+Number(d['总消息']||0).toLocaleString()+'</div></div>'
+      +'<div class="stat-kpi"><div class="k">会话数</div><div class="v">'+Number(d['会话数']||0).toLocaleString()+'</div></div>'
+      +'<div class="stat-kpi"><div class="k">我发出</div><div class="v">'+Number(d['我发']||0).toLocaleString()+'</div></div>';
+    const years=(d['年度']||[]).map(x=>({l:String(x['年']||''),n:x['条数']||0}));
+    const months=(d['最近月份']||[]).map(x=>({l:String(x['月']||'').slice(2),n:x['条数']||0}));
+    box.innerHTML=
+      '<div class="st-sec"><h4>年度消息量</h4>'+stBars(years,'l','n')+'</div>'
+      +'<div class="st-sec"><h4>最近 24 个月</h4>'+stBars(months,'l','n')+'</div>'
+      +'<div class="st-sec"><h4>消息最多的会话</h4>'+stRows(d['会话Top']||[],'会话名','条数')+'</div>'
+      +'<div class="st-sec"><h4>发言最多的发送者</h4>'+stRows(d['发送者Top']||[],'发送者','条数')+'</div>'
+      +'<div class="st-sec"><h4>消息类型</h4>'+stRows(d['类型']||[],'类型','条数')+'</div>';
+  }catch(e){box.innerHTML='<div class="sq-empty">统计失败：'+esc(String(e))+'</div>';}
+}
+
+// ---------------- 回收站 / 体检 / 开机自启 ----------------
+async function loadTrash(){
+  const box=$('trash-list'); if(!box) return;
+  box.innerHTML='<div class="sk"><div class="sk-l"></div><div class="sk-l"></div><div class="sk-l"></div></div>';
+  try{
+    const d=await fetch('/api/trash').then(r=>r.json());
+    const rows=d['条目']||[];
+    box.innerHTML=rows.length?rows.map((x,i)=>
+      '<div class="fav-row"><div class="fav-main"><div class="fav-hd">'
+      +'<span class="fav-nm">'+esc(x['目录'])+'</span>'
+      +'<span>'+esc(x['时间'])+'</span>'
+      +'<span>· '+esc(x['平台'])+'/'+esc(x['类'])+' · '+esc(String(x['大小MB']))+' MB</span></div></div>'
+      +'<div class="fav-act"><button class="ghost" onclick="restoreTrash('+i+')">恢复</button></div></div>'
+    ).join(''):'<div class="sq-empty">回收站为空</div>';
+  }catch(e){ box.innerHTML='<div class="bad">读取失败：'+esc(String(e))+'</div>'; }
+}
+async function restoreTrash(i){
+  try{
+    const d=await fetch('/api/trash').then(r=>r.json());
+    const x=(d['条目']||[])[i]; if(!x) return;
+    if(!confirm('把「'+x['目录']+'」搬回 '+x['平台']+'/'+x['类']+'？\n目标已存在时不会覆盖。')) return;
+    const r=await fetch('/api/trash/restore',{method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({batch:x['批次'],platform:x['平台'],sub:x['类'],dir:x['目录']})}).then(r=>r.json());
+    if(r['错误']){toast(r['错误']);return;}
+    toast('已恢复到 '+r['恢复至']); loadTrash();
+    if(typeof loadConvList==='function') loadConvList(true);
+  }catch(e){toast('恢复失败：'+e);}
+}
+async function runHealth(){
+  const box=$('health-out'); if(!box) return;
+  box.innerHTML='<div class="sk"><div class="sk-l"></div><div class="sk-l"></div><div class="sk-l"></div></div>';
+  try{
+    const d=await fetch('/api/health').then(r=>r.json());
+    if(d['错误']){box.innerHTML='<div class="bad">'+esc(d['错误'])+'</div>';return;}
+    const g=d['总览']||{}, arch=d['归档']||{};
+    let h='<div class="stat-kpis"><div class="stat-kpi"><div class="k">索引消息</div><div class="v">'
+      +Number(g['消息']||0).toLocaleString()+'</div></div>'
+      +'<div class="stat-kpi"><div class="k">会话</div><div class="v">'+Number(g['会话']||0).toLocaleString()+'</div></div>'
+      +'<div class="stat-kpi"><div class="k">索引大小</div><div class="v">'+esc(String(g['索引MB']||0))+' MB</div></div></div>';
+    h+=(d['检查']||[]).map(x=>'<div class="about-kv"><div class="k">'+esc(x['项目'])+'</div><div class="v">'
+      +Number(x['结果']||0).toLocaleString()+' · '+(x['状态']==='ok'?'<span class="ok">正常</span>':'<span class="bad">注意</span>')
+      +' <span class="muted">'+esc(x['说明']||'')+'</span></div></div>').join('');
+    for(const k of Object.keys(arch)){
+      h+='<div class="about-kv"><div class="k">'+esc(k)+'归档</div><div class="v">'
+        +Number(arch[k]['文件']||0).toLocaleString()+' 个文件 · '+esc(String(arch[k]['MB']||0))+' MB</div></div>';
+    }
+    box.innerHTML=h;
+  }catch(e){ box.innerHTML='<div class="bad">体检失败：'+esc(String(e))+'</div>'; }
+}
+async function loadAutostart(){
+  try{
+    const d=await fetch('/api/autostart').then(r=>r.json());
+    if($('cfg-autostart')) $('cfg-autostart').checked=!!d['开启'];
+  }catch(e){}
+}
+async function saveAutostart(){
+  const el=$('cfg-autostart'); if(!el) return;
+  const on=el.checked;
+  try{
+    const d=await fetch('/api/autostart',{method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({enable:on})}).then(r=>r.json());
+    if(d['错误']){ toast(d['错误']); el.checked=!on; return; }
+    toast(on?'已开启开机启动':'已关闭开机启动');
+  }catch(e){ toast('设置失败：'+e); el.checked=!on; }
+}
+
+let gmRows=[], gmQ='';
+async function ctShowMembers(){
+  const g=ctSel; if(!g||!g.群号) return;
+  const d=$('ct-detail');
+  d.innerHTML='<p class="muted">载入群成员...</p>';
+  let r;
+  try{ r=await fetch('/api/group_members?gnum='+encodeURIComponent(g.群号)).then(x=>x.json()); }
+  catch(e){ d.innerHTML='<p class="bad">载入失败: '+esc(String(e))+'</p>'; return; }
+  if(r.错误){ d.innerHTML='<p class="bad">'+esc(r.错误)+'</p>'; return; }
+  gmRows=r.成员||[]; gmQ='';
+  const name=g.群名||('群'+g.群号);
+  d.innerHTML=
+    '<div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;flex-wrap:wrap">'+
+      '<button class="ghost" onclick="ctBackToGroup()">← 返回群信息</button>'+
+      '<button class="ghost" onclick="gmExportCsv()">导出 CSV</button>'+
+      '<div style="font-size:17px;font-weight:600">'+esc(name)+' 的成员</div>'+
+      '<span class="muted" id="gm-count">共 '+esc(String(r.总数||0))+' 人</span></div>'+
+    '<input type="text" id="gm-q" placeholder="搜索 群名片 / 昵称 / QQ号" oninput="gmInput(this.value)">'+
+    '<div class="gm-list" id="gm-list"></div>';
+  renderGmList();
+}
+function ctBackToGroup(){
+  if(ctTab!=='group') ctSwitch('group');
+  const arr=ctMatches();
+  let i=arr.indexOf(ctSel);
+  if(i<0) i=0;
+  pickContact(i);
+}
+function gmInput(v){ gmQ=v; renderGmList(); }
+function gmExportCsv(){
+  const rows=gmMatch();
+  const q=v=>'"'+String(v==null?'':v).replace(/"/g,'""')+'"';
+  const lines=['成员,QQ,发言数,最近发言'];
+  for(const m of rows){
+    const nm=m.card||m.nick||('QQ'+(m.qq||''));
+    let last='';
+    if(m.last){ const dt=new Date(m.last*1000); if(!isNaN(dt)) last=dt.toLocaleDateString('zh-CN'); }
+    lines.push([nm,m.qq||'',m.n||0,last].map(q).join(','));
+  }
+  const blob=new Blob(['\ufeff'+lines.join('\r\n')],{type:'text/csv;charset=utf-8'});
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(blob);
+  a.download='群成员_'+((ctSel&&ctSel.群号)||'')+'.csv';
+  a.click();
+  setTimeout(()=>URL.revokeObjectURL(a.href),3000);
+  toast('已导出 '+rows.length+' 位成员');
+}
+function gmMatch(){
+  const q=(gmQ||'').trim().toLowerCase();
+  if(!q) return gmRows;
+  return gmRows.filter(m=>String(m.card||m.nick||'').toLowerCase().includes(q)
+    ||String(m.qq||'').includes(q));
+}
+function renderGmList(){
+  const box=$('gm-list'); if(!box) return;
+  const list=gmMatch(), MAX=500;
+  box.innerHTML=(list.slice(0,MAX).map(m=>{
+    const nm=m.card||m.nick||('QQ'+(m.qq||'?'));
+    let last='';
+    if(m.last){ const dt=new Date(m.last*1000); if(!isNaN(dt)) last=dt.toLocaleDateString('zh-CN'); }
+    return '<div class="gm-row"><div class="gm-ava" style="background:'+avaColor(m.qq||nm)+'">'+esc((nm||'?')[0])+'</div>'+
+      '<div style="min-width:0;flex:1"><div class="gm-nm">'+esc(nm)+'</div>'+
+      '<div class="gm-sub">'+(m.qq?('QQ'+esc(m.qq)+' · '):'')+'发言 '+esc(String(m.n||0))+' 条'+(last?(' · 最近 '+esc(last)):'')+'</div></div></div>';
+  }).join(''))||'<p class="muted" style="padding:12px">无匹配</p>';
+  const cnt=$('gm-count');
+  if(cnt) cnt.textContent='共 '+list.length+' 人'+(list.length>MAX?'（显示前'+MAX+'，可搜索缩小）':'');
+}
+let ctSelKw='', ctSelName='', ctSelConv='';
+function ctOpenReader(){
+  if(!ctSelConv){ alert('这个会话没有归档目录'); return; }
+  switchTab('search');
+  $('s-adv').style.display='flex'; $('s-toggle').classList.add('on');
+  loadConvs().then(()=>{ $('s-conv').value=ctSelConv; });
+  openReaderConv('QQ',ctSelConv,'',0);
+}
+function ctGoSearch(){
+  switchTab('search');
+  $('s-platform').value='QQ';
+  $('s-adv').style.display='flex'; $('s-toggle').classList.add('on');
+  loadConvs().then(()=>{ $('s-conv').value=ctSelConv; });
+  $('s-q').value='';
+  $('s-q').focus();
+}
+function ctGoAsk(){
+  switchTab('chat');
+  $('c-usectx').checked=true;
+  $('c-ctxq').value=ctSelKw;
+  $('c-input').value=ctSelName?('我和'+ctSelName+'聊过什么？'):'';
+  $('c-input').focus();
+}
+
+let history=[];
+let CHAT_MSGS=[];
+const CHAT_KEY='cv.chat';
+function saveChat(){
+  try{
+    const msgs=CHAT_MSGS.slice(-60).map(m=>({role:m.role,text:String(m.text||'').slice(0,6000),
+      refs:(m.refs||[]).slice(0,20).map(r=>({平台:r['平台'],会话:r['会话'],会话名:r['会话名'],
+        日期:r['日期'],时间:r['时间'],发送者:r['发送者'],id:r['id'],
+        显示:String(r['显示']==null?'':r['显示']).slice(0,400)}))}));
+    localStorage.setItem(CHAT_KEY,JSON.stringify({history:history.slice(-40),msgs:msgs}));
+  }catch(e){}
+}
+function restoreChat(){
+  let d=null;
+  try{ d=JSON.parse(localStorage.getItem(CHAT_KEY)||'null'); }catch(e){}
+  if(!d||!Array.isArray(d.msgs)||!d.msgs.length) return;
+  history=Array.isArray(d.history)?d.history:[];
+  const box=$('c-box');
+  const first=box.querySelector('.muted'); if(first) first.remove();
+  for(const m of d.msgs){ if(m&&m.text) addMsg(m.role==='user'?'user':'ai', m.text, m.refs, true); }
+}
+function renderRefs(refs){
+  if(!refs||!refs.length) return '';
+  const rows=refs.map(r=>'<div class="srcrow" data-p="'+escAttr(r['平台'])+'" data-c="'+escAttr(r['会话'])+'"'
+    +' data-d="'+escAttr(r['日期'])+'" data-i="'+(r['id']||0)+'" onclick="jumpRef(this)">'
+    +'<span class="t">'+esc(r['日期'])+' '+esc(r['时间'])+'</span>'
+    +'<span class="n">'+esc(r['会话名'])+'</span>'
+    +'<span class="w">'+esc((r['发送者']||'')+'：')+'</span>'
+    +'<span class="x">'+esc(r['显示'])+'</span></div>').join('');
+  return '<details class="srcbox"><summary>本次参考 '+refs.length
+    +' 条归档消息 · 点开核对，点任意一条跳到原文</summary>'+rows+'</details>';
+}
+function jumpRef(el){
+  const p=el.dataset.p||'QQ', c=el.dataset.c, d=el.dataset.d, i=parseInt(el.dataset.i||'0');
+  switchTab('search');
+  $('s-platform').value=p;
+  openReaderConv(p,c,d,i);
+}
+function addMsg(role,text,refs,noSave){
+  const box=$('c-box');
+  const first=box.querySelector('.muted, .chat-welcome'); if(first)first.remove();
+  const d=document.createElement('div');d.className='msg '+(role==='user'?'user':'ai');
+  d.innerHTML='<div class="inner"><div class="who">'+(role==='user'?'我':'助手')
+    +'</div><div class="bubble">'+esc(text)+'</div>'+(role==='user'?'':renderRefs(refs))+'</div>';
+  box.appendChild(d);box.scrollTop=box.scrollHeight;
+  CHAT_MSGS.push({role:role,text:String(text==null?'':text),refs:refs||[]});
+  if(CHAT_MSGS.length>120) CHAT_MSGS=CHAT_MSGS.slice(-120);
+  if(!noSave) saveChat();
+}
+function quickAsk(t){
+  const i=$('c-input'); if(!i) return;
+  i.value=t; sendChat();
+}
+async function sendChat(){
+  const t=$('c-input').value.trim(); if(!t)return;
+  $('c-input').value=''; $('c-btn').disabled=true;
+  addMsg('user',t);
+  $('c-meta').textContent='思考中...';
+  const r=await fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({text:t,history,use_context:$('c-usectx').checked,context_query:$('c-ctxq').value,platform:$('c-platform').value,
+      provider:$('c-prov').value===''?null:parseInt($('c-prov').value)})}).then(x=>x.json());
+  const reply=r.回复||'(无回复)';
+  history.push({role:'user',content:t});
+  history.push({role:'assistant',content:reply});
+  addMsg('ai',reply,r.参考);
+  $('c-meta').textContent='使用 '+(r.服务||'?')+' · '+(r.模型||'?')+
+    (r.上下文?(' · '+r.上下文+'(已脱敏)'):' · 未附带归档片段');
+  $('c-btn').disabled=false;
+}
+function clearChat(){
+  history=[]; CHAT_MSGS=[];
+  try{ localStorage.removeItem(CHAT_KEY); }catch(e){}
+  $('c-box').innerHTML='<div class="muted">对话已清空。所有内容都会在本地脱敏后才发送给模型。</div>';
+  $('c-meta').textContent='';
+}
+
+async function loadKey(){
+  const s=await fetch('/api/keystatus').then(x=>x.json());
+  const qqOk=!!s['QQ密钥已配置'], wxOk=!!s['微信密钥已配置'], mOk=!!s['模型密钥已配置'];
+  $('k-status').innerHTML=
+    '<div>QQ 密钥: <b>'+esc(s['QQ密钥'])+'</b> '+(qqOk?'<span class="ok">已配置</span>':'<span class="need">未配置</span>')+'</div>'+
+    '<div>微信密钥: '+(wxOk?'<span class="ok">已配置</span>':'<span class="need">未配置</span>')+'</div>'+
+    '<div>QQ 原始数据库: '+(s['活跃库存在']?'<span class="ok">可读取</span>':'<span class="bad">找不到</span>')+' · 修改于 '+esc(s['活跃库修改时间'])+'</div>'+
+    '<div>QQ 最后同步: '+esc(s['QQ最后同步'])+'</div>'+
+    '<div>微信最后同步: '+esc(s['微信最后同步'])+'</div>'+
+    '<div>模型密钥: <b>'+esc(s['GLM密钥'])+'</b> '+(mOk?'<span class="ok">已配置</span>':'<span class="need">未配置</span>')+'</div>';
+  $('k-path').textContent=s['QQ密钥文件']||'(未配置)';
+  if(s['配置说明']) $('k-status').innerHTML+='<div class="bad" style="margin-top:8px">'+esc(s['配置说明'])+'</div>';
+  const qqCard=$('kcard-qq'), wxCard=$('kcard-wx'), mCard=$('kcard-model');
+  if(qqCard) qqCard.classList.toggle('need', !qqOk);
+  if(wxCard) wxCard.classList.toggle('need', !wxOk);
+  if(mCard) mCard.classList.toggle('need', !mOk);
+  const nav=document.querySelector('.navbtn[data-p="keys"]');
+  if(nav) nav.classList.toggle('alert', !(qqOk&&wxOk&&mOk));
+  document.querySelectorAll('#p-sync [data-sync-target="qq"]').forEach(b=>b.classList.toggle('need-btn',!qqOk));
+  document.querySelectorAll('#p-sync [data-sync-target="wechat"]').forEach(b=>b.classList.toggle('need-btn',!wxOk));
+}
+async function testKey(){
+  $('k-test').disabled=true;$('k-test-out').innerHTML='<span class="muted">验证中(运行 dry-run)...</span>';
+  const r=await fetch('/api/testkey').then(x=>x.json());
+  $('k-test-out').innerHTML='<div class="'+(r.成功?'ok':'bad')+'">'+(r.成功?'✅ 密钥有效，同步管道正常':'❌ 密钥可能已失效，请重新提取并写入 key 文件')+'</div>'+
+    '<pre>'+esc(r.日志||r.输出)+'</pre>';
+  $('k-test').disabled=false;
+}
+// ---------------- 设置页 ----------------
+
+function escAttr(s){return esc(String(s==null?'':s)).replace(/"/g,'&quot;');}
+function addProv(name,api,key,model){
+  providers.push({name:name||'',api:api||'',key:key||'',model:model||''});
+  activeProv=providers.length-1;
+  renderProv();fillChatProv();
+}
+function delProv(i){
+  providers.splice(i,1);
+  if(activeProv>=providers.length)activeProv=Math.max(0,providers.length-1);
+  renderProv();fillChatProv();
+}
+function setActive(i){activeProv=i;renderProv();fillChatProv();}
+function collectProv(){
+  return providers.map((p,i)=>({
+    name:(document.querySelector('.p-name[data-i="'+i+'"]')||{}).value||p.name||'',
+    api:(document.querySelector('.p-api[data-i="'+i+'"]')||{}).value||'',
+    key:(document.querySelector('.p-key[data-i="'+i+'"]')||{}).value||'',
+    model:(document.querySelector('.p-model[data-i="'+i+'"]')||{}).value||'',
+  }));
+}
+function renderProv(){
+  const el=$('prov-list');
+  if(!providers.length){el.innerHTML='<p class="muted" style="margin:0">尚未添加模型服务，点下方按钮快速添加。</p>';return;}
+  el.innerHTML=providers.map((p,i)=>
+    '<div class="prov'+(i==activeProv?' cur':'')+'">'+
+      '<div style="display:flex;align-items:center;gap:8px">'+
+        '<input type="radio" name="prov-active" style="width:auto" '+(i==activeProv?'checked':'')+' onchange="setActive('+i+')" title="设为当前使用">'+
+        '<input class="p-name" data-i="'+i+'" value="'+escAttr(p.name)+'" placeholder="服务名称" style="width:170px;font-weight:600">'+
+        (i==activeProv?'<span class="pill ok-pill">当前使用</span>':'<span class="pill">点击左侧圆点启用</span>')+
+        '<span style="flex:1"></span>'+
+        '<button class="ghost" style="flex:0;padding:5px 13px;font-size:12px" onclick="testProv('+i+')">测试</button>'+
+        '<button class="ghost" style="flex:0;padding:5px 13px;font-size:12px;color:#e5483c;border-color:#f3b6b1" onclick="delProv('+i+')">删除</button>'+
+      '</div>'+
+      '<div class="row" style="margin-top:8px">'+
+        '<div style="flex:3"><label>接口地址</label><input class="p-api" data-i="'+i+'" value="'+escAttr(p.api)+'" placeholder="https://... 或 http://127.0.0.1:11434/v1/chat/completions"></div>'+
+        '<div style="flex:2"><label>模型名</label><input class="p-model" data-i="'+i+'" value="'+escAttr(p.model)+'" placeholder="glm-4-flash / qwen2.5:7b"></div>'+
+        '<div style="flex:2"><label>API Key（本地模型留空）</label><input class="p-key" type="password" data-i="'+i+'" value="'+escAttr(p.key||'')+'" placeholder="本地模型无需填写"></div>'+
+      '</div>'+
+      '<div class="p-out" data-i="'+i+'" style="margin-top:8px;font-size:12.5px"></div>'+
+    '</div>').join('');
+}
+function fillChatProv(){
+  const sel=$('c-prov');
+  if(!providers.length){sel.innerHTML='<option value="">(未配置模型服务)</option>';return;}
+  if(activeProv>=providers.length)activeProv=0;
+  sel.innerHTML=providers.map((p,i)=>
+    '<option value="'+i+'"'+(i==activeProv?' selected':'')+'>'+esc(p.name||('服务'+(i+1)))+' · '+esc(p.model||'未填模型')+'</option>').join('');
+}
+async function testProv(i){
+  const out=document.querySelector('.p-out[data-i="'+i+'"]');
+  const vals=collectProv()[i];
+  out.innerHTML='<span class="muted">连接测试中...</span>';
+  try{
+    const r=await fetch('/api/provider/test',{method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify(vals)}).then(x=>x.json());
+    if(r.成功){out.innerHTML='<span class="ok">✅ 连接正常'+(r.回复?'，模型回复: '+esc(r.回复):'')+'</span>';}
+    else{out.innerHTML='<span class="bad">❌ '+esc(r.错误||'失败')+'</span>';}
+  }catch(e){out.innerHTML='<span class="bad">❌ '+esc(String(e))+'</span>';}
+}
+function fillCfg(d){
+  rawCfg=d;
+  const g=d.glm||{}, p=d.paths||{}, a=d.account||{}, c=d.chat||{};
+  $('cfg-sysprompt').value=c.system_prompt||'';
+  // 旧配置只有 glm 段时自动迁移为第一个服务
+  if(Array.isArray(d.providers)&&d.providers.length){providers=d.providers;}
+  else{providers=[{name:'智谱GLM',api:g.api||'',key:g.api_key||'',model:g.model||'glm-4-flash'}];}
+  activeProv=parseInt(d.active_provider)||0;
+  renderProv();fillChatProv();
+  $('cfg-qq-archive').value=p.qq_archive||'';
+  $('cfg-wx-archive').value=p.wechat_archive||'';
+  $('cfg-qq-out').value=p.qq_summary_out||'';
+  $('cfg-wx-out').value=p.wechat_summary_out||'';
+  $('cfg-qq-keyfile').value=p.qq_key_file||'';
+  $('cfg-qq-lib').value=p.qq_lib||'';
+  $('cfg-qq-log').value=p.qq_log||'';
+  $('cfg-wx-log').value=p.wechat_log||'';
+  $('cfg-qq-incr').value=p.qq_incr||'';
+  $('cfg-wx-incr').value=p.wechat_incr||'';
+  $('cfg-wx-dbdir').value=p.wechat_db_dir||'';
+  $('cfg-data-root').value=p.data_root||'';
+  $('cfg-index-db').value=p.index_db||'';
+  $('cfg-trash').value=p.trash||'';
+  $('cfg-index-hint').textContent='  当前生效：'+(d['_索引库']||'');
+  $('cfg-trash-hint').textContent='  当前生效：'+(d['_回收站']||'');
+  $('cfg-qq-uin').value=a.qq||'';
+  $('cfg-path').textContent=d['_配置路径']||'.local/config.json';
+}
+async function saveDataRoot(){
+  const root=$('cfg-data-root').value.trim();
+  const out=$('cfg-data-out'); out.textContent='创建中…';
+  try{
+    const r=await fetch('/api/setup/init',{method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({data_root:root})}).then(x=>x.json());
+    if(r['错误']){ out.innerHTML='<span class="bad">'+esc(r['错误'])+'</span>'; return; }
+    out.innerHTML='<span class="ok">✓ 已保存：'+esc(r['数据根'])+'</span>'+
+      (r['新建']&&r['新建'].length?('，新建 '+r['新建'].length+' 个目录'):'');
+    loadSettings();
+  }catch(e){ out.innerHTML='<span class="bad">保存失败：'+esc(String(e))+'</span>'; }
+}
+async function checkEnv(){
+  const out=$('cfg-data-out'); out.textContent='检查中…';
+  try{
+    const d=await fetch('/api/preflight').then(x=>x.json());
+    out.innerHTML=(d['检查']||[]).map(c=>
+      '<div><span class="'+(c['正常']?'ok':'bad')+'">'+(c['正常']?'✓':'✗')+'</span> '+
+      esc(c['项'])+'：'+esc(c['值']||'')+'</div>').join('');
+  }catch(e){ out.textContent='检查失败：'+e; }
+}
+async function loadSettings(){
+  try{
+    const d=await fetch('/api/config').then(x=>x.json());
+    fillCfg(d);
+    $('cfg-msg').textContent=d['_已配置']?'配置已就绪':'尚未配置完整，请填写后保存';
+    $('cfg-msg').className=d['_已配置']?'set-msg ok':'set-msg bad';
+  }catch(e){
+    $('cfg-msg').textContent='读取配置失败，请点「重新载入」再试。';
+    $('cfg-msg').className='set-msg bad';
+    console.error(e);
+  }
+loadAutostart(); loadTrash();
+}
+async function saveSettings(){
+  const ch=cfgChanges();
+  if(ch.length && !confirm('将修改以下 '+ch.length+' 项配置：\n\n· '+ch.join('\n· ')
+      +'\n\n保存后立即生效，确定继续？')) return;
+  const payload={
+    glm:(rawCfg&&rawCfg.glm)||{},
+    providers:collectProv(),
+    active_provider:activeProv,
+    chat:{system_prompt:$('cfg-sysprompt').value},
+    paths:{data_root:$('cfg-data-root').value.trim(),
+      qq_archive:$('cfg-qq-archive').value.trim(),wechat_archive:$('cfg-wx-archive').value.trim(),
+      qq_summary_out:$('cfg-qq-out').value.trim(),wechat_summary_out:$('cfg-wx-out').value.trim(),
+      qq_key_file:$('cfg-qq-keyfile').value.trim(),qq_lib:$('cfg-qq-lib').value.trim(),
+      qq_log:$('cfg-qq-log').value.trim(),wechat_log:$('cfg-wx-log').value.trim(),
+      qq_incr:$('cfg-qq-incr').value.trim(),wechat_incr:$('cfg-wx-incr').value.trim(),
+      wechat_db_dir:$('cfg-wx-dbdir').value.trim(),
+      index_db:$('cfg-index-db').value.trim(),trash:$('cfg-trash').value.trim()},
+    account:{qq:$('cfg-qq-uin').value.trim()},
+    sync:(rawCfg&&rawCfg.sync)||{}
+  };
+  $('cfg-save').disabled=true;$('cfg-msg').className='set-msg';$('cfg-msg').textContent='保存中...';
+  try{
+    const r=await fetch('/api/config',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)}).then(x=>x.json());
+    if(r.成功){$('cfg-msg').textContent='✅ 已保存并即时生效';$('cfg-msg').className='set-msg ok';loadKey();}
+    else{$('cfg-msg').textContent='❌ 保存失败: '+(r.错误||'');$('cfg-msg').className='set-msg bad';}
+  }catch(e){$('cfg-msg').textContent='保存失败: '+e;$('cfg-msg').className='set-msg bad';}
+  $('cfg-save').disabled=false;
+}
+async function testSettings(){
+  $('cfg-test-out').innerHTML='<p class="muted">检查中...</p>';
+  const r=await fetch('/api/config/test').then(x=>x.json());
+  $('cfg-test-out').innerHTML='<div class="card" style="margin-top:10px">'+(r.检查||[]).map(c=>
+    '<div style="padding:3px 0"><span class="'+(c.正常?'ok':'bad')+'">'+(c.正常?'✓':'✗')+'</span> '+esc(c.项)+': '+esc(c.值)+'</div>'
+  ).join('')+'</div>';
+}
+// ---------------- 索引 ----------------
+async function loadIndex(){
+  const el=$('ix-status'); if(!el) return;
+  try{
+    const d=await fetch('/api/index/status').then(x=>x.json());
+    const p=d['平台']||{}, pr=d['进度']||{};
+    let h='';
+    for(const k of ['QQ','微信']){
+      const v=p[k];
+      h+='<div>'+k+': '+(v?('<b>'+v['消息'].toLocaleString()+'</b> 条 / '+v['会话']+' 个会话'):'<span class="bad">还没建立</span>')+'</div>';
+    }
+    h+='<div class="muted">搜索数据 '+((d['库大小MB']||0))+' MB · 更新于 '+esc(d['索引时间']||'-')+'</div>';
+    if(pr.running){
+      h+='<div class="ok">正在建立搜索数据：'+esc(pr.platform||'')+' '+pr.done+'/'+pr.total+' 个文件，已写入 '+pr.msg+' 条</div>';
+    }
+    el.innerHTML=h;
+    el.className='statusline';
+    if($('about-ver') && d['版本']) $('about-ver').textContent=d['版本'];
+    if($('about-data')){
+      const qq=p['QQ'], wx=p['微信'];
+      $('about-data').textContent='QQ '+(qq?(qq['消息'].toLocaleString()+' 条 / '+qq['会话']+' 会话'):'—')
+        +' · 微信 '+(wx?(wx['消息'].toLocaleString()+' 条 / '+wx['会话']+' 会话'):'—');
+    }
+  }catch(e){ el.textContent='读取失败: '+e; }
+}
+async function buildIndex(force){
+  const btns=document.querySelectorAll('#p-keys .syncbtn');
+  btns.forEach(b=>b.disabled=true);
+  const out=$('ix-out');
+  out.innerHTML='<span class="muted">任务启动中…</span>';
+  try{
+    const r=await fetch('/api/index/build',{method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({force:!!force})}).then(x=>x.json());
+    if(r['错误']){ out.innerHTML='<span class="bad">'+esc(r['错误'])+'</span>'; }
+    else{ await pollJob(r.id,out,null); }
+  }catch(e){ out.innerHTML='<span class="bad">'+esc(String(e))+'</span>'; }
+  btns.forEach(b=>b.disabled=false);
+  loadIndex(); if(typeof loadScope==='function') loadScope();
+  if(typeof loadConvs==='function') loadConvs(true);
+}
+
+// ---------------- 同步 / 密钥与索引 ----------------
+function fmtDur(sec){
+  sec=Math.max(0,Math.floor(Number(sec)||0));
+  const m=Math.floor(sec/60), s=sec%60;
+  return m>0 ? (m+' 分 '+(s<10?'0':'')+s+' 秒') : (s+' 秒');
+}
+function renderJobOut(el,job,running){
+  const lines=(job.输出||[]).slice(-25).map(esc).join('\n');
+  const st=running?'<span class="muted">⏳ 运行中</span>'
+    :(job.退出码===0?'<span class="ok">✅ 完成</span>'
+      :'<span class="bad">❌ '+esc(/同步/.test(job.名称||'')?'同步没完成':('失败：'+job.状态))+'</span>');
+  const pr=job['进度']||{};
+  const pct=Math.max(0,Math.min(100,Number(pr.percent)||0));
+  const now=Math.floor(Date.now()/1000);
+  const startTs=Number(job['开始秒']||0);
+  let bar='';
+  if(running){
+    bar='<div class="jobprog"><div class="bar"><div class="fill" style="width:'+pct+'%"></div></div>'+
+      '<div class="txt"><span>'+esc(pr.stage||'准备中')+'</span><span class="pct">'+pct+'%</span></div></div>';
+    if(startTs>0){
+      bar+='<div class="muted" style="font-size:12px">已运行 <span data-dur>'+fmtDur(now-startTs)+'</span>'+
+        (job.开始?(' · 开始于 '+esc(job.开始)):'')+'</div>';
+    }
+    const at=Number(pr.at||0);
+    if(at>0 && now-at>=120){
+      bar+='<div class="warn job-warn">已经 '+fmtDur(now-at)+
+        ' 没有新进展，可能卡在读取或解密。可以继续等，也可以关掉窗口重开后再试。</div>';
+    }
+    if(job['最新']) bar+='<div class="muted" style="font-size:12px;margin-top:4px">最近：'+esc(job['最新'])+'</div>';
+  }else if(job['错误说明']){
+    bar='<div class="warn job-warn">'+esc(job['错误说明'])+'</div>';
+  }
+  el.innerHTML='<div style="margin-bottom:6px">'+st+' <span class="muted">'+esc(job.名称||'')+' · '+esc(job.开始||'')+(job.结束?(' → '+esc(job.结束)):'')+'</span></div>'+
+    bar+(lines?'<pre>'+lines+'</pre>':'');
+  if(running && startTs>0){
+    el.dataset.start=String(startTs);
+    if(!el._tick){
+      el._tick=setInterval(()=>{
+        const d=el.querySelector('[data-dur]');
+        if(!d || !el.dataset.start) return;
+        d.textContent=fmtDur(Math.floor(Date.now()/1000)-Number(el.dataset.start));
+      },1000);
+    }
+  }else if(el._tick){
+    clearInterval(el._tick); el._tick=null; delete el.dataset.start;
+  }
+}
+function pollJob(jobId,el,btn){
+  return new Promise(resolve=>{
+    const t=setInterval(async()=>{
+      const j=await fetch('/api/job?id='+jobId).then(x=>x.json());
+      const running=j.状态==='运行中';
+      renderJobOut(el,j,running);
+      if(!running){clearInterval(t);if(btn)btn.disabled=false;resolve(j);}
+    },1200);
+  });
+}
+async function startSync(target,dry){
+  const btns=document.querySelectorAll('#p-sync .syncbtn');
+  btns.forEach(b=>b.disabled=true);
+  const out=$('sy-out');
+  out.innerHTML='<span class="muted">任务启动中...</span>';
+  try{
+    const r=await fetch('/api/sync',{method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({target,dry})}).then(x=>x.json());
+    if(r.错误){out.innerHTML='<span class="bad">'+esc(r.错误)+'</span>';}
+    else{await pollJob(r.id,out,null);loadSyncStatus();loadKey();}
+  }catch(e){out.innerHTML='<span class="bad">'+esc(String(e))+'</span>';}
+  btns.forEach(b=>b.disabled=false);
+}
+
+let syCfgLoaded=false;
+async function loadSyncStatus(){
+  const box=$('sy-status');
+  if(!box) return;
+  try{
+    const d=await fetch('/api/sync/status').then(x=>x.json());
+    const s=d.配置||{};
+    const on=s.enabled?'<span class="ok">已开启</span>':'<span class="muted">已关闭</span>';
+    box.innerHTML='最后 QQ 同步：'+esc(d.上次QQ||'—')+' · 微信：'+esc(d.上次微信||'—')+' · 自动同步：'+on;
+    $('sy-next').textContent=d.下次自动
+      ? ('下次自动同步：'+d.下次自动+(d.自动上次?('（上次自动：'+d.自动上次+'）'):''))
+      : '当前未安排自动同步';
+    if(d.错误) $('sy-next').textContent+=' · 调度提示：'+d.错误;
+    if(d.运行中){
+      renderJobOut($('sy-job'),{名称:d.运行中.名称,'进度':d.运行中['进度'],
+        '开始秒':d.运行中['开始秒'],'最新':d.运行中['最新'],输出:[]},true);
+    }else{ $('sy-job').innerHTML=''; }
+    const fail=$('sy-fail');
+    if(fail){
+      if(d.最近失败){
+        fail.innerHTML='<div class="warn job-warn"><b>上次同步没成功</b>'+
+          '<div style="margin-top:4px">'+esc(d.最近失败)+'</div>'+
+          '<div style="margin-top:8px;display:flex;gap:8px;flex-wrap:wrap">'+
+          '<button class="ghost" onclick="showSyncLog(&#39;qq&#39;)">查看 QQ 日志</button>'+
+          '<button class="ghost" onclick="showSyncLog(&#39;wechat&#39;)">查看微信日志</button></div></div>';
+      }else{ fail.innerHTML=''; }
+    }
+    if(!syCfgLoaded) fillSyncCfg(s);
+    if(window._syTimer) clearInterval(window._syTimer);
+    window._syTimer=setInterval(loadSyncStatus,10000);
+  }catch(e){ box.textContent='读取失败: '+e; }
+}
+function syModeChanged(){
+  const daily=$('sy-mode').value==='daily';
+  $('sy-interval').disabled=daily;
+  $('sy-time').disabled=!daily;
+}
+async function showSyncLog(which){
+  const box=$('sy-log'); if(!box) return;
+  box.innerHTML='<div class="sk"><div class="sk-l"></div><div class="sk-l"></div><div class="sk-l"></div></div>';
+  try{
+    const d=await fetch('/api/log?which='+encodeURIComponent(which)+'&lines=200').then(r=>r.json());
+    box.innerHTML='<div class="muted" style="margin-bottom:6px">'+esc(d['路径']||'')+'</div>'
+      +'<pre>'+esc(d['内容']||'（空）')+'</pre>';
+  }catch(e){ box.innerHTML='<div class="bad">读取失败：'+esc(String(e))+'</div>'; }
+}
+function fillSyncCfg(s){
+  $('sy-enabled').checked=!!s.enabled;
+  $('sy-mode').value=s.mode||'interval';
+  $('sy-interval').value=s.interval_minutes||60;
+  $('sy-time').value=s.daily_time||'00:30';
+  const t=s.targets||['qq','wechat'];
+  $('sy-qq').checked=t.indexOf('qq')>=0;
+  $('sy-wx').checked=t.indexOf('wechat')>=0;
+  $('sy-startup').checked=!!s.on_startup;
+  $('sy-reindex').checked=!!s.rebuild_index;
+  syCfgLoaded=true;
+  syModeChanged();
+}
+async function importScan(){
+  const p=$('imp-path').value.trim();
+  const box=$('imp-result'), cp=$('imp-copy');
+  if(!p){ box.innerHTML='<div class="bad">请先粘贴文件夹的完整路径</div>'; cp.style.display='none'; return; }
+  box.innerHTML='<div class="muted">正在检查…</div>';
+  cp.style.display='none';
+  try{
+    const r=await fetch('/api/import/scan',{method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({path:p})}).then(x=>x.json());
+    if(r['错误']){ box.innerHTML='<div class="bad">'+esc(r['错误'])+'</div>'; return; }
+    const s=r['统计']||{};
+    const line=(k,v)=>'<div style="display:flex;justify-content:space-between;gap:12px;padding:3px 0">'
+      +'<span class="muted">'+k+'</span><span>'+v+'</span></div>';
+    let h='<div style="border:1px solid var(--line);border-radius:8px;padding:8px 12px">';
+    h+=line('md 文件',(s.md||0)+' 个');
+    h+=line('txt 文件',(s.txt||0)+' 个');
+    h+=line('html 文件',(s.html||0)+' 个');
+    h+=line('数据库文件',(s.db||0)+' 个');
+    h+=line('有没有「私聊 / 群聊」结构',r['归档结构']?'<span class="ok">有</span>':'<span class="bad">没有</span>');
+    h+=line('抽查能读的文件',Number(r['抽样可读']||0)>0?'<span class="ok">'+Number(r['抽样可读'])+' 个</span>':'<span class="bad">0 个</span>');
+    h+='</div>';
+    h+='<p style="margin:10px 0 0" class="'+(r['可导入']?'ok':'warn')+'">'+esc(r['建议']||'')+'</p>';
+    box.innerHTML=h;
+    if(r['可导入']) cp.style.display='block';
+  }catch(e){ box.innerHTML='<div class="bad">检查失败：'+esc(String(e))+'</div>'; }
+}
+async function importCopy(){
+  const p=$('imp-path').value.trim();
+  const box=$('imp-result');
+  const platform=$('imp-platform').value;
+  if(!p){ toast('请先填文件夹路径'); return; }
+  box.innerHTML='<div class="muted">正在复制，文件多时请稍等…</div>';
+  try{
+    const r=await fetch('/api/import/copy',{method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({path:p,platform:platform})}).then(x=>x.json());
+    if(r['错误']){ box.innerHTML='<div class="bad">'+esc(r['错误'])+'</div>'; return; }
+    const n=Number(r['复制']||0), sk=Number(r['跳过']||0);
+    toast('已复制 '+n+' 个 md，跳过 '+sk+' 个已存在文件');
+    box.innerHTML='<p class="ok">已复制 '+n+' 个 md 到「'+esc(r['目标']||'')+'」，跳过 '+sk+' 个已有文件。'
+      +'正在后台建索引，稍后会出现在左侧会话列表。</p>';
+    if(typeof loadConvs==='function') setTimeout(()=>loadConvs(true),1500);
+  }catch(e){ box.innerHTML='<div class="bad">复制失败：'+esc(String(e))+'</div>'; }
+}
+async function saveSyncCfg(){
+  const msg=$('sy-cfg-msg');
+  const targets=[];
+  if($('sy-qq').checked) targets.push('qq');
+  if($('sy-wx').checked) targets.push('wechat');
+  if(!targets.length){ msg.innerHTML='<span class="bad">至少勾选 QQ 或微信</span>'; return; }
+  const interval=Math.max(5,Math.min(1440,parseInt($('sy-interval').value||'60',10)||60));
+  const payload={
+    enabled:$('sy-enabled').checked, mode:$('sy-mode').value,
+    interval_minutes:interval, daily_time:$('sy-time').value||'00:30',
+    targets:targets, on_startup:$('sy-startup').checked,
+    rebuild_index:$('sy-reindex').checked
+  };
+  msg.innerHTML='<span class="muted">保存中…</span>';
+  try{
+    const cur=await fetch('/api/config').then(x=>x.json());
+    cur.sync=payload;
+    const r=await fetch('/api/config',{method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify(cur)}).then(x=>x.json());
+    if(r.成功||r.ok){
+      msg.innerHTML='<span class="ok">已保存，15 秒内生效</span>';
+      syCfgLoaded=false; setTimeout(loadSyncStatus,600);
+    }else{
+      msg.innerHTML='<span class="bad">保存失败：'+esc(r.错误||'未知错误')+'</span>';
+    }
+  }catch(e){ msg.innerHTML='<span class="bad">'+esc(String(e))+'</span>'; }
+}
+async function wxHunt(){
+  const btn=$('wx-hunt-btn'),msg=$('wx-hunt-msg');
+  btn.disabled=true;msg.textContent='扫描中(约1-2分钟，微信需已登录)...';
+  const out=$('sync-out');
+  try{
+    const r=await fetch('/api/wxkey',{method:'POST'}).then(x=>x.json());
+    if(r.错误){
+      msg.innerHTML='<span class="bad">'+esc(r.错误)+'</span>';
+      btn.disabled=false;
+      return;
+    }
+    else{
+      const j=await pollJob(r.id,out,btn);
+      msg.textContent=j.退出码===0?'✅ 密钥已更新并验证，下次微信同步即用新 key':'❌ 抓取失败，查看输出日志';
+    }
+  }catch(e){msg.textContent='失败: '+e;btn.disabled=false;}
+  loadKey();
+}
+async function copySkill(){
+  try{
+    const r=await fetch('/api/skill?name=qq-key-recovery').then(x=>x.json());
+    if(r['错误']){toast(r['错误']);return;}
+    const text=String(r['内容']||'');
+    if(!text){toast('skill 内容为空');return;}
+    await copyText(text);
+    toast('已复制完整 skill，可直接粘贴给 AI');
+  }catch(e){toast('复制失败：'+e);}
+}
+function copyText(text){
+  return new Promise((resolve,reject)=>{
+    const fallback=()=>{
+      try{
+        const ta=document.createElement('textarea');
+        ta.value=text; ta.style.position='fixed'; ta.style.opacity='0';
+        document.body.appendChild(ta); ta.select();
+        document.execCommand('copy'); ta.remove(); resolve();
+      }catch(e){ reject(e); }
+    };
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(text).then(resolve).catch(fallback);
+    }else fallback();
+  });
+}
+async function saveQQKey(){
+  const v=$('qqkey-in').value.trim();
+  const out=$('qqkey-out');
+  if(!v){out.innerHTML='<span class="bad">请先粘贴密钥</span>';return;}
+  const btn=event&&event.target;
+  if(btn)btn.disabled=true;
+  out.innerHTML='<span class="muted">写入并校验中...</span>';
+  try{
+    const r=await fetch('/api/qqkey',{method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({key:v})}).then(x=>x.json());
+    if(!r.成功){out.innerHTML='<span class="bad">❌ '+esc(r.错误||'')+'</span>';}
+    else{
+      const ok=r.校验通过===true, fail=r.校验通过===false;
+      out.innerHTML='<div class="'+(fail?'bad':'ok')+'">已写入 <code>'+esc(r.已写入||'')+'</code><br>校验: '+esc(r.校验||'')+'</div>';
+      $('qqkey-in').value='';
+    }
+  }catch(e){out.innerHTML='<span class="bad">'+esc(String(e))+'</span>';}
+  if(btn)btn.disabled=false;
+  loadKey();
+}
+try{ switchTab(bootQ.get('tab')||lastTab||'search'); }
+catch(e){ console.error('启动切换失败', e); }
+loadSettings();
+loadKey();
+loadIndex();
+loadFavs();
+checkBanner();
+restoreChat();
+
+// ---------------- 右键菜单 ----------------
+let ctxFns={};
+function hideCtx(){ const m=$('ctxmenu'); if(m) m.classList.remove('on'); }
+function showCtx(x,y,items){
+  let m=$('ctxmenu');
+  if(!m){ m=document.createElement('div'); m.id='ctxmenu'; m.className='ctxmenu'; document.body.appendChild(m); }
+  ctxFns={};
+  m.innerHTML=items.map((it,i)=>{
+    if(it==='-') return '<div class="ctxsep"></div>';
+    const k='a'+i; ctxFns[k]=it.fn;
+    return '<div class="ctxitem" data-k="'+k+'">'+esc(it.label)+'</div>';
+  }).join('');
+  m.classList.add('on');
+  const w=m.offsetWidth,h=m.offsetHeight;
+  m.style.left=Math.max(6,Math.min(x,window.innerWidth-w-8))+'px';
+  m.style.top=Math.max(6,Math.min(y,window.innerHeight-h-8))+'px';
+  m.onclick=e=>{
+    const el=e.target.closest('.ctxitem'); if(!el) return;
+    const fn=ctxFns[el.dataset.k]; hideCtx(); if(fn) fn();
+  };
+}
+document.addEventListener('contextmenu',e=>{
+  const bub=e.target.closest('.bub[data-mi]');
+  if(!bub){ hideCtx(); return; }
+  e.preventDefault();
+  const i=parseInt(bub.dataset.mi||'-1');
+  const r=rdOf(bub);
+  const m=(r.msgs||[])[i]; if(!m) return;
+  const who=m['我']?'我':(m['发送者']||'');
+  const items=[
+    {label:'复制这条消息', fn:()=>rdCopyMsg(i,bub)},
+    {label:'复制当天全部', fn:()=>rdCopyDay(bub)},
+  ];
+  const favKey=[r.plat,r.conv,(m['日期']||r.date),m.id].join('|');
+  items.unshift({label:FAV.keys.has(favKey)?'取消收藏':'⭐ 收藏这条', fn:()=>favToggleMsg(
+    r.plat,r.conv,r.name,(m['日期']||r.date),m.id,m['时间']||'',
+    m['我']?'我':(m['发送者']||''),m['显示']||m['正文']||'')});
+  if(who && who!=='我' && who!=='未知') items.push({label:'只看 '+who+' 的发言', fn:()=>filterSender(who)});
+  items.push('-', {label:'导出整场对话（md）', fn:()=>rdExport(bub)},
+                   {label:'导出整场对话（HTML）', fn:()=>rdExport(bub,'html')});
+  showCtx(e.clientX,e.clientY,items);
+});
+document.addEventListener('click',e=>{ if(!e.target.closest('#ctxmenu')) hideCtx(); });
+
+// ---------------- 快捷键 ----------------
+
+document.addEventListener('keydown',e=>{
+  if(e.altKey&&e.key==='ArrowLeft'){ e.preventDefault(); navBack(); return; }
+  if(e.altKey&&e.key==='ArrowRight'){ e.preventDefault(); navForward(); return; }
+  const tag=String((e.target.tagName||'')).toLowerCase();
+  const typing=(tag==='input'||tag==='textarea'||tag==='select'||e.target.isContentEditable);
+  const ctrl=e.ctrlKey||e.metaKey;
+  if(ctrl && ['k','K','f','F'].includes(e.key)){
+    e.preventDefault();
+    const tab=document.body.dataset.tab;
+    if(tab==='convs') $('v-q').focus();
+    else if(tab==='search') $('s-q').focus();
+    else { switchTab('search'); setTimeout(()=>$('s-q').focus(),0); }
+    return;
+  }
+  if(ctrl && e.key==='Enter'){
+    if(document.body.dataset.tab==='chat'){ e.preventDefault(); sendChat(); }
+    return;
+  }
+  if(e.key==='Escape'){
+    if($('del-mask2')&&$('del-mask2').style.display!=='none'){ delClose2(); return; }
+    if($('del-mask1')&&$('del-mask1').style.display!=='none'){ delClose1(); return; }
+    hideCtx(); return;
+  }
+  if(e.altKey && /^[0-9]$/.test(e.key) && !typing){
+    e.preventDefault();
+    const n=parseInt(e.key,10);
+    const p=tabOrder()[n===0?9:n-1];
+    if(p) switchTab(p);
+  }
+});
+</script>
+</body>
+</html>
