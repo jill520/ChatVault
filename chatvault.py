@@ -178,7 +178,7 @@ def api_preflight():
     }
 
 
-SKILL_ALLOW = {"qq-key-recovery"}
+SKILL_ALLOW = {"qq-key-recovery", "wechat-key-recovery"}
 
 
 def api_skill_text(name):

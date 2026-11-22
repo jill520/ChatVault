@@ -424,6 +424,10 @@ document.documentElement.dataset.density=u.density||'m';}catch(e){}})();
       <button id="wx-hunt-btn" onclick="wxHunt()">一键抓取微信密钥</button>
       <span class="muted" id="wx-hunt-msg" style="margin-left:8px"></span>
       <div id="wx-hunt-out" style="margin-top:10px"></div>
+      <div class="skill-line" style="display:flex;align-items:center;gap:8px;margin-top:8px;flex-wrap:wrap">
+        <span class="muted">自动抓不到时，复制完整 skill 发给 AI，让它按流程排查。</span>
+        <button class="ghost" onclick="copySkill('wechat-key-recovery')">复制完整 skill（发给 AI）</button>
+      </div>
     </div>
 
     <div class="card" id="kcard-qq">
@@ -2941,9 +2945,10 @@ async function wxHunt(){
     loadKey();
   }
 }
-async function copySkill(){
+async function copySkill(name){
+  name=name||'qq-key-recovery';
   try{
-    const r=await fetch('/api/skill?name=qq-key-recovery').then(x=>x.json());
+    const r=await fetch('/api/skill?name='+encodeURIComponent(name)).then(x=>x.json());
     if(r['错误']){toast(r['错误']);return;}
     const text=String(r['内容']||'');
     if(!text){toast('skill 内容为空');return;}

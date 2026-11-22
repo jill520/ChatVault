@@ -26,6 +26,7 @@ WHITELIST = [
     "chatvault.html",
     "web/app.css",
     "assets/skills/qq-key-recovery/SKILL.md",
+    "assets/skills/wechat-key-recovery/SKILL.md",
     "chatvault_extras.py",
     "chatvault_app.py",
     "chatvault_index.py",
