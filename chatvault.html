@@ -423,6 +423,7 @@ document.documentElement.dataset.density=u.density||'m';}catch(e){}})();
       <p class="hint">微信已登录时点下面按钮；只读取，不改微信文件。</p>
       <button id="wx-hunt-btn" onclick="wxHunt()">一键抓取微信密钥</button>
       <span class="muted" id="wx-hunt-msg" style="margin-left:8px"></span>
+      <div id="wx-hunt-out" style="margin-top:10px"></div>
     </div>
 
     <div class="card" id="kcard-qq">
@@ -2707,6 +2708,7 @@ function fmtDur(sec){
   return m>0 ? (m+' 分 '+(s<10?'0':'')+s+' 秒') : (s+' 秒');
 }
 function renderJobOut(el,job,running){
+  if(!el) return;
   const lines=(job.输出||[]).slice(-25).map(esc).join('\n');
   const st=running?'<span class="muted">⏳ 运行中</span>'
     :(job.退出码===0?'<span class="ok">✅ 完成</span>'
@@ -2750,10 +2752,21 @@ function renderJobOut(el,job,running){
 function pollJob(jobId,el,btn){
   return new Promise(resolve=>{
     const t=setInterval(async()=>{
-      const j=await fetch('/api/job?id='+jobId).then(x=>x.json());
-      const running=j.状态==='运行中';
-      renderJobOut(el,j,running);
-      if(!running){clearInterval(t);if(btn)btn.disabled=false;resolve(j);}
+      try{
+        const j=await fetch('/api/job?id='+jobId).then(x=>x.json());
+        if(!j||j.错误){
+          clearInterval(t);if(btn)btn.disabled=false;
+          if(el) el.innerHTML='<div class="bad">任务状态读取失败：'+esc((j&&j.错误)||'没有返回')+'</div>';
+          resolve(null);return;
+        }
+        const running=j.状态==='运行中';
+        renderJobOut(el,j,running);
+        if(!running){clearInterval(t);if(btn)btn.disabled=false;resolve(j);}
+      }catch(e){
+        clearInterval(t);if(btn)btn.disabled=false;
+        if(el) el.innerHTML='<div class="bad">任务状态读取失败：'+esc(String(e))+'</div>';
+        resolve(null);
+      }
     },1200);
   });
 }
@@ -2901,22 +2914,32 @@ async function saveSyncCfg(){
   }catch(e){ msg.innerHTML='<span class="bad">'+esc(String(e))+'</span>'; }
 }
 async function wxHunt(){
-  const btn=$('wx-hunt-btn'),msg=$('wx-hunt-msg');
-  btn.disabled=true;msg.textContent='扫描中(约1-2分钟，微信需已登录)...';
-  const out=$('sync-out');
+  const btn=$('wx-hunt-btn'),msg=$('wx-hunt-msg'),out=$('wx-hunt-out');
+  btn.disabled=true;
+  msg.textContent='扫描中(约 1-2 分钟，微信需已登录)...';
+  if(out) out.innerHTML='<div class="muted">正在启动扫描…</div>';
   try{
     const r=await fetch('/api/wxkey',{method:'POST'}).then(x=>x.json());
     if(r.错误){
       msg.innerHTML='<span class="bad">'+esc(r.错误)+'</span>';
-      btn.disabled=false;
+      if(out) out.innerHTML='';
       return;
     }
-    else{
-      const j=await pollJob(r.id,out,btn);
-      msg.textContent=j.退出码===0?'✅ 密钥已更新并验证，下次微信同步即用新 key':'❌ 抓取失败，查看输出日志';
+    const j=await pollJob(r.id,out,btn);
+    if(j&&j.退出码===0){
+      msg.innerHTML='<span class="ok">✅ 密钥已更新并验证，下次微信同步即用新 key</span>';
+    }else{
+      const lines=(j&&j.输出)||[];
+      const reason=String((j&&j.错误说明)||lines[lines.length-1]||(j&&j.状态)||'没拿到原因，点下面重试一次')
+        .replace(/^异常:\s*/,'');
+      msg.innerHTML='<span class="bad">❌ 抓取失败：'+esc(reason)+'</span>';
     }
-  }catch(e){msg.textContent='失败: '+e;btn.disabled=false;}
-  loadKey();
+  }catch(e){
+    msg.innerHTML='<span class="bad">抓取失败：'+esc(String(e))+'</span>';
+  }finally{
+    btn.disabled=false;
+    loadKey();
+  }
 }
 async function copySkill(){
   try{

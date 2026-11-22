@@ -1796,6 +1796,13 @@ def api_sync_status():
 
 def _run_wx_hunt(log_fn):
     """进程内执行 wxexport.keys.hunt + map,生成 all_keys.json。"""
+    def _prog(pct, stage):
+        try:
+            log_fn.set_progress(pct, stage)
+        except Exception:
+            pass
+
+    _prog(3, "检查微信数据目录")
     wx_src = None
     for p in _tool_src_dirs():
         if "wechat4-db-decrypt" in p:
@@ -1814,6 +1821,12 @@ def _run_wx_hunt(log_fn):
             for ln in str(s).splitlines():
                 if ln.strip():
                     log_fn(ln)
+                    if "数据目录" in ln:
+                        _prog(15, "已找到微信数据目录")
+                    elif "微信版本" in ln:
+                        _prog(22, "正在读取微信信息")
+                    elif "已验证密钥" in ln:
+                        _prog(80, "已抓到密钥，正在校验")
             return len(s)
 
         def flush(self):
@@ -1836,10 +1849,14 @@ def _run_wx_hunt(log_fn):
             argv += ["--db-dir", str(db_dir)]
             log_fn("自动检测到微信数据目录: %s" % db_dir)
         sys.argv = argv
+        _prog(10, "正在扫描微信进程（约 1-2 分钟）")
         code = wx_hunt.main()
         if code == 0:
+            _prog(85, "正在整理密钥")
             sys.argv = ["map"]
             code = wx_map.main() or 0
+        if code == 0:
+            _prog(100, "完成")
     finally:
         sys.argv = old_argv
         sys.stdout = old_stdout
